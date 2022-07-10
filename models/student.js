@@ -1,35 +1,35 @@
 const { hash } = require('../helpers/hash');
 const { Schema, Types, model } = require('mongoose');
+let messages = require("../helpers/messages");
+
+let isQuadrantName = (name) => {
+    let arrayOfName = this.name.split(" ");
+    return arrayOfName.length === 4 ? true : false;
+}
+
 const studentSchema = new Schema({
-    firstName: {
+    name: {
         type: String,
-        required: true,
-        trim: true,
-        min: 3,
-        max: 30
-    },
-    lastName: {
-        type: String,
-        required: true,
-        trim: true,
-        min: 3,
-        max: 30
+        required: [true, messages.genrale.required],
+        validate: {
+            validator: isQuadrantName,
+            message: props => messages.register.faild.name
+        }
     },
     email: {
         type: String,
-        required: true,
-        trim: true,
-        lowercase: true,
-        unique: true
+        required: [true, messages.genrale.required],
+        lowercase: [true, messages.genrale.lowercase],
+        unique: [true, messages.genrale.unique]
     },
     password: {
         type: String,
-        required: true
+        required: [true, messages.genrale.required]
     },
     phoneNumber: {
         type: String,
-        required: true,
-        unique: true
+        required: [true, messages.genrale.required],
+        unique: [true, messages.genrale.unique]
     },
     accepted: {
         type: Boolean,
