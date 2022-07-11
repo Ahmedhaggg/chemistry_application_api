@@ -18,9 +18,15 @@ require("./config/database")
 let authStudentRoutes = require("./routes/students/auth.student.router");
 let gradeStudentRoutes = require("./routes/students/grade.student.router");
 
-app.use("/students", authStudentRoutes)
+app.use("/students/auth", authStudentRoutes)
 app.use("/students/grades", gradeStudentRoutes)
 
-
+app.use((err, req, res, next) => {
+    console.log(err);
+    res.status(222).json({
+        success: false,
+        error: err.description
+    });
+})
 
 app.listen(5000, () => console.log("server is running"))

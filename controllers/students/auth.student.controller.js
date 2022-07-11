@@ -7,21 +7,21 @@ let jwt = require("../../helpers/jwt");
 const roles = require("../../helpers/roles");
 
 exports.register = async (req, res, next) => {
-    let { name, email, password, phoneNumber, gradeId, currentCourseId } = req.body;
+    let { name, email, password, phoneNumber, grade, currentCourse } = req.body;
 
-    let _id = await studentService.createStudent({
+    let studentId = await studentService.createStudent({
         name,
         email,
         password,
         phoneNumber,
-        gradeId,
-        currentCourseId
+        grade,
+        currentCourse
     });
 
     res.status(status.OK).json({
         success: true,
         message: messages.register.success,
-        studentId: _id
+        studentId
     });
 
 };
@@ -30,22 +30,30 @@ exports.login = async (req, res, next) => {
     let { email, password } = req.body;
 
     let student = await studentService.getStudentLoginData({ email });
-
-    if (student)
-        throw new APIError(status.INTERNAL_SERVER_ERROR, messages.login.faild.email);
-
+    if (!student)
+        throw new APIError(status.CLIENT_ERROR, {
+            errorName: "loginError",
+            message: messages.login.faild.email
+        });
+    console.log(student)
     if (student.accepted === false)
-        throw new APIError(status.unAuthenticated, messages.login.faild.unaccepted);
+        throw new APIError(status.UNAUTHENTICATED, {
+            errorName: "loginError",
+            message: messages.login.faild.unaccepted
+        });
 
     let checkPassword = await compare(password, student.password);
 
     if (checkPassword === false)
-        throw new APIError(status.INTERNAL_SERVER_ERROR, messages.login.faild.password);
+        throw new APIError(status.CLIENT_ERROR, {
+            errorName: "loginError",
+            message: messages.login.faild.password
+        });
 
-    let token = jwt.createJwtToken({
+    let token = await jwt.createJwtToken({
         id: student._id,
         role: roles.STUDENT
-    });
+    }, "7d");
 
     res.status(status.OK).json({
         success: true,
@@ -58,15 +66,18 @@ exports.login = async (req, res, next) => {
 exports.getAcceptedResult = async (req, res, next) => {
     let { studentId } = req.params;
 
-    let studentIsAccepted = await studentService.getStudentLoginData({ _id: studentId });
+    let student = await studentService.getStudentLoginData({ _id: studentId });
 
-    if (studentIsAccepted === false)
-        throw new APIError(status.unAuthenticated, messages.login.faild.unaccepted);
+    if (student.accepted === false)
+        throw new APIError(status.UNAUTHENTICATED, {
+            errorName: "authenticatedError",
+            message: messages.login.faild.unaccepted
+        });
 
-    let token = jwt.createJwtToken({
+    let token = await jwt.createJwtToken({
         id: student._id,
         role: roles.STUDENT
-    });
+    }, "7d");
 
     res.status(status.OK).json({
         success: true,

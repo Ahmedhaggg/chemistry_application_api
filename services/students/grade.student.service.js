@@ -1,3 +1,3 @@
 let { Grade } = require("../../models");
 
-exports.getAllGrade = async () => await Grade.find();
+exports.getAllGrades = async () => await Grade.find().select("_id name currentCourseId");
