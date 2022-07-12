@@ -21,6 +21,12 @@ let gradeStudentRoutes = require("./routes/students/grade.student.router");
 app.use("/students/auth", authStudentRoutes)
 app.use("/students/grades", gradeStudentRoutes)
 
+// teacher routes
+let authTeacherRoutes = require("./routes/teacher/auth.teacher.router");
+
+
+app.use("/teacher/auth", authTeacherRoutes);
+
 app.use((err, req, res, next) => {
     console.log(err);
     res.status(222).json({

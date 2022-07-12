@@ -4,6 +4,7 @@ const APIError = require("../../errors/api.error");
 let messages = require("../../helpers/messages");
 const { compare } = require("../../helpers/hash");
 let roles = require("../../helpers/roles");
+let jwt = require("../../helpers/jwt");
 
 exports.register = async (req, res, next) => {
     let { email, password } = req.body;

@@ -1,4 +1,5 @@
 let { Schema, model, Types } = require("mongoose");
+let { hash } = require("../helpers/hash");
 
 let teacherSchema = new Schema({
     email: String,
