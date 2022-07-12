@@ -26,26 +26,26 @@ let arabic = {
 
 module.exports = {
     serverError: "something went wrong",
-    unauthorized: "لا يمكن الوصول الي هذا النقطة حاليا",
+    unauthorized: "should login first",
     genrale: {
-        required: "هذا الحقل مطلوب",
-        unique: "تم استخدامه من قبل",
-        lowercase: "يجب ان تكون كل الحروف صغيرة"
+        required: "field is required",
+        unique: "it is used before",
+        lowercase: "letter should be capital"
     },
     register: {
-        success: "تم تسجيل الدخول بنجاح, في انتظار القبول من المدرس",
+        success: "success register, You must wait until you are accepted by the teacher",
         faild: {
-            email: "البريد الالكتروني مستخدم من قبل",
-            phoneNumber: "الرقم الهاتف مستخدم من قبل",
-            name: "يجب ان يكون الاسم رباعي",
+            email: "email is used before",
+            phoneNumber: "phoneNumber is used before",
+            name: "The name must be quadruple"
         }
     },
     login: {
-        success: "تم تسجيل الدخول بنجاح",
+        success: "success login",
         faild: {
-            email: "البريد الالكتروني المستخدم غير صحيح",
-            password: "كلمة المرور خاطئة",
-            unaccepted: "لا يمكنك الدخول الي التطبيق الان . انت في انتظار القبول من المدرس"
+            email: "email is not used",
+            password: "incorrect password",
+            unaccepted: "you can't enter, You must wait until you are accepted by the teacher"
         }
     }
 }

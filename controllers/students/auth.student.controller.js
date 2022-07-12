@@ -86,7 +86,3 @@ exports.getAcceptedResult = async (req, res, next) => {
     });
 
 }
-
-// 62caea93d19d5529cb0b8af2
-// 62caeaf6d19d5529cb0b8af4
-// 62caeafad19d5529cb0b8af5
