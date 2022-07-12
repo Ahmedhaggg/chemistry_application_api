@@ -1,16 +1,17 @@
 let router = require("express").Router();
 let authStudentController = require("../../controllers/students/auth.student.controller");
+let catchErrors = require("../../middlewares/catchErrors");
 
 router.post("/login",
-    authStudentController.login
+    catchErrors(authStudentController.login)
 );
 
 router.post("/register",
-    authStudentController.register
+    catchErrors(authStudentController.register)
 );
 
-router.get("/accepted",
-    authStudentController.getAcceptedResult
+router.get("/accepted/:studentId",
+    catchErrors(authStudentController.getAcceptedResult)
 );
 
 module.exports = router;

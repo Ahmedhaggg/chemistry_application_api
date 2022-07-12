@@ -3,7 +3,7 @@ const { Schema, Types, model } = require('mongoose');
 let messages = require("../helpers/messages");
 
 let isQuadrantName = (name) => {
-    let arrayOfName = this.name.split(" ");
+    let arrayOfName = name.split(" ");
     return arrayOfName.length === 4 ? true : false;
 }
 
@@ -35,8 +35,8 @@ const studentSchema = new Schema({
         type: Boolean,
         default: false
     },
-    cureentCourse: { type: Types.ObjectId, ref: "Course" },
-    grade: { type: Types.ObjectId, ref: "Grade" },
+    currentCourse: { type: Types.ObjectId, ref: "Course", required: [true, messages.genrale.required] },
+    grade: { type: Types.ObjectId, ref: "Grade", required: [true, messages.genrale.required] },
     courseProgress: {
         type: {
             unitId: { type: Types.ObjectId, ref: "Unit" },

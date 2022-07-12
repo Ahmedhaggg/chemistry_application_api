@@ -1,15 +1,19 @@
 let { Student } = require("../../models");
-
+const { handleInsertErrors } = require("../../errors/databaseErrorHandler");
 
 exports.createStudent = async studentData => {
-    let newStudent = new Student();
-    newStudent.name = studentData.name;
-    newStudent.email = studentData.email;
-    newStudent.password = studentData.password;
-    newStudent.phoneNumber = studentData.phoneNumber;
-    newStudent.gradeId = studentData.gradeId;
-    newStudent.currentCourseId = studentData.currentCourseId;
-    return await newStudent.save();
+    try {
+        let newStudent = new Student();
+        newStudent.name = studentData.name;
+        newStudent.email = studentData.email;
+        newStudent.password = studentData.password;
+        newStudent.phoneNumber = studentData.phoneNumber;
+        newStudent.grade = studentData.grade;
+        newStudent.currentCourse = studentData.currentCourse;
+        return await (await newStudent.save())._id;
+    } catch (error) {
+        handleInsertErrors(error);
+    }
 }
 
 exports.getStudentLoginData = async query => await Student
