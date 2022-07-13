@@ -1,6 +1,9 @@
 const express = require("express");
 const cors = require("cors");
 
+
+const messages = require("./helpers/messages")
+
 let app = express()
 
 // user parse md
@@ -23,15 +26,16 @@ app.use("/students/grades", gradeStudentRoutes)
 
 // teacher routes
 let authTeacherRoutes = require("./routes/teacher/auth.teacher.router");
-
+let courseTeacherRoutes = require("./routes/teacher/course.teacher.router");
 
 app.use("/teacher/auth", authTeacherRoutes);
+app.use("/teacher/courses", courseTeacherRoutes);
 
 app.use((err, req, res, next) => {
     console.log(err);
-    res.status(222).json({
+    res.status(err.httpStatusCode || 500).json({
         success: false,
-        error: err.description
+        error: err.description || messages.serverError
     });
 })
 
