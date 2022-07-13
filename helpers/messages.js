@@ -32,7 +32,8 @@ module.exports = {
     genrale: {
         required: "field is required",
         unique: "it is used before",
-        lowercase: "letter should be capital"
+        lowercase: "letter should be capital",
+        incorrectId: "incorrect id of this field"
     },
     register: {
         success: "success register, You must wait until you are accepted by the teacher",
@@ -57,6 +58,16 @@ module.exports = {
         },
         faild: {
             update: "something went wrong, when update this course"
+        }
+
+    },
+    grade: {
+        success: {
+            create: "grade is created successfully",
+            update: "grade is updated Successfully"
+        },
+        faild: {
+            update: "something went wrong, when update this grade"
         }
 
     }
