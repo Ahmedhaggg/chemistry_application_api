@@ -8,7 +8,7 @@ exports.handleInsertErrors = error => {
         let errors = {};
 
         Object.keys(error.errors).forEach((key) => {
-            errors[key] = error.errors[key].message;
+            errors[key] = error.errors[key].kind === "ObjectId" ? messages.genrale.incorrectId : error.errors[key].message;
         });
 
         throw new APIError(status.CLIENT_ERROR, {
