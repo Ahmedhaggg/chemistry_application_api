@@ -2,18 +2,30 @@ const roles = require("../helpers/roles");
 let APIError = require("../errors/api.error");
 let messages = require("../helpers/messages");
 let status = require("../errors/status");
-
+let jwt = require("../helpers/jwt")
 exports.isStudent = async (req, res, next) => {
     try {
         let token = req.headers['authorization'];
+        if (!token) {
 
-        let tokenData = await getDataFromJwtToken(token);
-
-        if (tokenData.role !== roles.STUDENT)
-            throw new APIError(status.UNAUTHORIZED, {
+            let newError = new APIError(status.UNAUTHORIZED, {
                 errorName: "authorizedError",
                 message: messages.unauthorized
             });
+
+            next(newError);
+        }
+
+        let tokenData = await jwt.getDataFromJwtToken(token);
+
+        if (tokenData.role !== roles.STUDENT) {
+
+            let newError = new APIError(status.UNAUTHORIZED, {
+                errorName: "authorizedError",
+                message: messages.unauthorized
+            });
+            return next(newError);
+        }
 
         req.student = {
             id: tokenData.id,
@@ -34,20 +46,37 @@ exports.isTeacher = async (req, res, next) => {
     try {
         let token = req.headers['authorization'];
 
-        let tokenData = await getDataFromJwtToken(token);
+        if (!token) {
 
-        if (tokenData.role !== roles.TEACHER)
-            throw new APIError(status.UNAUTHORIZED, {
+            let newError = new APIError(status.UNAUTHORIZED, {
                 errorName: "authorizedError",
                 message: messages.unauthorized
             });
 
-        next();
-    } catch (error) {
+            next(newError);
+        }
 
-        throw new APIError(status.INTERNAL_SERVER_ERROR, {
+        let tokenData = await jwt.getDataFromJwtToken(token);
+
+        if (tokenData.role === roles.TEACHER)
+            return next();
+
+        let error = new APIError(status.UNAUTHORIZED, {
+            success: false,
+            errorName: "authorizedError",
+            message: messages.unauthorized
+        });
+
+        next(error);
+
+    } catch (error) {
+        console.log(error);
+        let newError = new APIError(status.INTERNAL_SERVER_ERROR, {
+            success: false,
             errorName: "serverError",
             message: messages.serverError
         });
+        next(newError);
+
     }
 }

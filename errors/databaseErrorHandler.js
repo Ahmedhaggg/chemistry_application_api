@@ -3,7 +3,7 @@ let APIError = require("./api.error");
 let messages = require("../helpers/messages");
 
 exports.handleInsertErrors = error => {
-    console.log(error)
+
     if (error.name === "ValidationError") {
         let errors = {};
 
@@ -15,19 +15,34 @@ exports.handleInsertErrors = error => {
             errorName: "validationError",
             errors
         });
-    } else if (error.index === 0) {
+    }
+
+    if (error.index === 0) {
         let errors = {};
         Object.keys(error.keyPattern).forEach(key => {
             errors[key] = messages.genrale.unique
         });
-        throw new APIError(status.INTERNAL_SERVER_ERROR, {
+        throw new APIError(status.CLIENT_ERROR, {
             errorName: "validationError",
             errors
         });
-    } else {
-        throw new APIError(status.INTERNAL_SERVER_ERROR, {
-            errorName: "serverError",
-            message: messages.serverError
-        });
     }
+
+    throw new APIError(status.INTERNAL_SERVER_ERROR, {
+        errorName: "serverError",
+        message: messages.serverError
+    });
+
+};
+
+exports.handleUpdateErrors = error => {
+    throw error.matchedCount === 0 ? new APIError(status.NOT_FOUND, {
+        errorName: "updateError",
+        message: messages.notFound
+    }) : new APIError(status.CLIENT_ERROR, {
+        errorName: "updateError",
+        message: messages.oldData
+    })
+
+
 }

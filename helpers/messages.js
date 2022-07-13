@@ -27,6 +27,8 @@ let arabic = {
 module.exports = {
     serverError: "something went wrong",
     unauthorized: "should login first",
+    notFound: "not found",
+    oldData: "data is not old, please send new data",
     genrale: {
         required: "field is required",
         unique: "it is used before",
@@ -47,6 +49,16 @@ module.exports = {
             password: "incorrect password",
             unaccepted: "you can't enter, You must wait until you are accepted by the teacher"
         }
+    },
+    course: {
+        success: {
+            create: "course is created successfully",
+            update: "course is updated Successfully"
+        },
+        faild: {
+            update: "something went wrong, when update this course"
+        }
+
     }
 }
 
