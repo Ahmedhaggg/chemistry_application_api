@@ -1,17 +1,15 @@
 let { Schema, Types, model } = require("mongoose");
+let messages = require("../helpers/messages");
 
 let UnitSchema = new Schema({
     name: {
         type: String,
-        required: true
+        required: [true, messages.genrale.required],
+        unique: true
     },
     arrangement: {
         type: Number,
-        required: true
-    },
-    courseName: {
-        type: String,
-        required: true
+        required: [true, messages.genrale.required]
     },
     exam: {
         type: {

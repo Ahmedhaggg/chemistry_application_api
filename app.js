@@ -28,10 +28,12 @@ app.use("/students/grades", gradeStudentRoutes)
 let authTeacherRoutes = require("./routes/teacher/auth.teacher.router");
 let courseTeacherRoutes = require("./routes/teacher/course.teacher.router");
 let gradeTeacherRoutes = require("./routes/teacher/grade.teacher.router");
+let courseUnitTeacher = require("./routes/teacher/courseUnit.teacher.router");
 
 app.use("/teacher/auth", authTeacherRoutes);
 app.use("/teacher/courses", courseTeacherRoutes);
 app.use("/teacher/grades", gradeTeacherRoutes);
+app.use("/teacher/courses", courseUnitTeacher);
 
 app.use((err, req, res, next) => {
     console.log(err);
