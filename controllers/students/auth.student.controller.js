@@ -35,7 +35,7 @@ exports.login = async (req, res, next) => {
             errorName: "loginError",
             message: messages.login.faild.email
         });
-    console.log(student)
+
     if (student.accepted === false)
         throw new APIError(status.UNAUTHENTICATED, {
             errorName: "loginError",
@@ -50,9 +50,11 @@ exports.login = async (req, res, next) => {
             message: messages.login.faild.password
         });
 
+
     let token = await jwt.createJwtToken({
         id: student._id,
-        role: roles.STUDENT
+        role: roles.STUDENT,
+        currentCourseId: student.currentCourse
     }, "7d");
 
     res.status(status.OK).json({
