@@ -18,12 +18,17 @@ let lessonSchema = new Schema({
         required: true
     },
     exam: {
+        _id: false,
         type: {
-            degree: String,
+            _id: false,
+            degree: Number,
             questions: [
                 {
                     question: String,
-                    answer: String
+                    answers: [
+                        String
+                    ],
+                    correctAnswer: String
                 }
             ]
         },
