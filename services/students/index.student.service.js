@@ -18,8 +18,7 @@ exports.createStudent = async studentData => {
 
 exports.getStudentLoginData = async query => await Student
     .findOne(query)
-    .select("email accepted password");
-
+    .select("email accepted password currentCourse");
 
 // exports.deleteStudent = async studentId => {
 //     let deletedStudent = await Student.deleteOne({ _id: studentId });

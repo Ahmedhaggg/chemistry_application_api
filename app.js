@@ -20,21 +20,27 @@ require("./config/database")
 // student routes 
 let authStudentRoutes = require("./routes/students/auth.student.router");
 let gradeStudentRoutes = require("./routes/students/grade.student.router");
+let courseStudentsRoutes = require("./routes/students/course.student.router");
 
 app.use("/students/auth", authStudentRoutes)
 app.use("/students/grades", gradeStudentRoutes)
+app.use("/students/courses", courseStudentsRoutes);
 
 // teacher routes
 let authTeacherRoutes = require("./routes/teacher/auth.teacher.router");
 let courseTeacherRoutes = require("./routes/teacher/course.teacher.router");
 let gradeTeacherRoutes = require("./routes/teacher/grade.teacher.router");
+let courseUnitTeacherRoutes = require("./routes/teacher/courseUnit.teacher.router");
+let lessonTeacherRoutes = require("./routes/teacher/lesson.teacher.router");
 
 app.use("/teacher/auth", authTeacherRoutes);
 app.use("/teacher/courses", courseTeacherRoutes);
 app.use("/teacher/grades", gradeTeacherRoutes);
+app.use("/teacher/courses", courseUnitTeacherRoutes);
+app.use("/teacher/units", lessonTeacherRoutes);
 
 app.use((err, req, res, next) => {
-    console.log(err);
+    console.log(err)
     res.status(err.httpStatusCode || 500).json({
         success: false,
         error: err.description || messages.serverError

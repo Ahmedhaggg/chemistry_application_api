@@ -29,16 +29,19 @@ exports.isStudent = async (req, res, next) => {
 
         req.student = {
             id: tokenData.id,
-            role: tokenData.role
+            role: tokenData.role,
+            currentCourseId: tokenData.currentCourseId
         };
 
         next();
-    } catch (error) {
-
-        throw new APIError(status.INTERNAL_SERVER_ERROR, {
+    } catch (_) {
+        let newError = new APIError(status.INTERNAL_SERVER_ERROR, {
+            success: false,
             errorName: "serverError",
             message: messages.serverError
         });
+
+        next(newError);
     }
 }
 
@@ -70,13 +73,13 @@ exports.isTeacher = async (req, res, next) => {
         next(error);
 
     } catch (error) {
-        console.log(error);
+
         let newError = new APIError(status.INTERNAL_SERVER_ERROR, {
             success: false,
             errorName: "serverError",
             message: messages.serverError
         });
-        next(newError);
 
+        next(newError);
     }
 }

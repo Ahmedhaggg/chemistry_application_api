@@ -70,6 +70,28 @@ module.exports = {
             update: "something went wrong, when update this grade"
         }
 
+    },
+    unit: {
+        success: {
+            create: "unit is created and added to course successfully",
+            update: "unit is updated Successfully"
+        },
+        faild: {
+            update: "something went wrong, when update this unit"
+        }
+
+    },
+    lesson: {
+        success: {
+            create: "lesson is created and added to course successfully",
+            update: "lesson is updated Successfully",
+            delete: "lesson is deleted successfully"
+        },
+        faild: {
+            update: "something went wrong, when update this lesson",
+            delete: "lesson not found to delete"
+        }
+
     }
 }
 
