@@ -1,22 +1,23 @@
+let courseUnitService = require("../../services/students/courseUnit.student.service");
 const APIError = require("../../errors/api.error");
-let studentService = require("../../services/students/index.student.service");
 let messages = require("../../helpers/messages");
 let status = require("../../errors/status");
 
 exports.show = async (req, res, next) => {
-    let { id } = req.student;
+    let { unitId } = req.params;
 
-    let profile = await studentService.getStudentProfileData({ _id: id });
+    let unit = await courseUnitService.getUnit({ _id: unitId });
 
-    if (!profile)
+    if (!unit)
         throw new APIError(status.NOT_FOUND, {
             success: false,
             message: messages.notFound,
-            profile
+            unit
         });
 
     res.status(status.OK).json({
         success: true,
-        profile
+        unit
     })
 }
+

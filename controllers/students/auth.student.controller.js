@@ -55,7 +55,7 @@ exports.login = async (req, res, next) => {
         id: student._id,
         role: roles.STUDENT,
         currentCourseId: student.currentCourse
-    }, "7d");
+    }, "30d");
 
     res.status(status.OK).json({
         success: true,
@@ -78,8 +78,9 @@ exports.getAcceptedResult = async (req, res, next) => {
 
     let token = await jwt.createJwtToken({
         id: student._id,
-        role: roles.STUDENT
-    }, "7d");
+        role: roles.STUDENT,
+        currentCourseId: student.currentCourse
+    }, "30d");
 
     res.status(status.OK).json({
         success: true,

@@ -20,6 +20,9 @@ exports.getStudentLoginData = async query => await Student
     .findOne(query)
     .select("email accepted password currentCourse");
 
+
+exports.getStudentProfileData = async query => await Student.findOne(query);
+
 // exports.deleteStudent = async studentId => {
 //     let deletedStudent = await Student.deleteOne({ _id: studentId });
 //     console.log(deletedStudent);

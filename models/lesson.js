@@ -28,7 +28,8 @@ let lessonSchema = new Schema({
                     answers: [
                         String
                     ],
-                    correctAnswer: String
+                    correctAnswer: String,
+                    _id: false
                 }
             ]
         },
