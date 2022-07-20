@@ -7,7 +7,6 @@ exports.isStudentCourse = async (req, res, next) => {
         let { currentCourseId } = req.student;
         let { courseId } = req.params;
 
-
         if (courseId === currentCourseId)
             return next();
 
