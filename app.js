@@ -20,11 +20,13 @@ require("./config/database")
 // student routes 
 let authStudentRoutes = require("./routes/students/auth.student.router");
 let gradeStudentRoutes = require("./routes/students/grade.student.router");
-let courseStudentsRoutes = require("./routes/students/course.student.router");
+let courseStudentRoutes = require("./routes/students/course.student.router");
+let profileStudentRoutes = require("./routes/students/profile.student.router");
 
-app.use("/students/auth", authStudentRoutes)
-app.use("/students/grades", gradeStudentRoutes)
-app.use("/students/courses", courseStudentsRoutes);
+app.use("/students/auth", authStudentRoutes);
+app.use("/students/grades", gradeStudentRoutes);
+app.use("/students/courses", courseStudentRoutes);
+app.use("/students/profile", profileStudentRoutes);
 
 // teacher routes
 let authTeacherRoutes = require("./routes/teacher/auth.teacher.router");
