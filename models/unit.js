@@ -12,18 +12,22 @@ let UnitSchema = new Schema({
         required: [true, messages.genrale.required]
     },
     exam: {
+        _id: false,
         type: {
-            degree: String,
-            questions: {
-                type: [
-                    {
-                        question: String,
-                        answer: String
-                    }
-                ]
-            }
+            _id: false,
+            degree: Number,
+            questions: [
+                {
+                    question: String,
+                    answers: [
+                        String
+                    ],
+                    correctAnswer: String,
+                    _id: false
+                }
+            ]
         },
-        default: null
+        required: false
     },
     lessons: {
         type: [

@@ -39,12 +39,14 @@ let courseTeacherRoutes = require("./routes/teacher/course.teacher.router");
 let gradeTeacherRoutes = require("./routes/teacher/grade.teacher.router");
 let courseUnitTeacherRoutes = require("./routes/teacher/courseUnit.teacher.router");
 let lessonTeacherRoutes = require("./routes/teacher/lesson.teacher.router");
+let UnitExamTeacherRoutes = require("./routes/teacher/unitExam.teacher.router")
 
 app.use("/teacher/auth", authTeacherRoutes);
 app.use("/teacher/courses", courseTeacherRoutes);
 app.use("/teacher/grades", gradeTeacherRoutes);
 app.use("/teacher/courses", courseUnitTeacherRoutes);
 app.use("/teacher/units", lessonTeacherRoutes);
+app.use("/teacher/units", UnitExamTeacherRoutes)
 
 app.use((err, req, res, next) => {
     console.log(err)
@@ -53,5 +55,7 @@ app.use((err, req, res, next) => {
         error: err.description || messages.serverError
     });
 })
+
+
 
 app.listen(5000, () => console.log("server is running"))

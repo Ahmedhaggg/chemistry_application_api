@@ -79,7 +79,14 @@ module.exports = {
         faild: {
             update: "something went wrong, when update this unit"
         }
-
+    },
+    unitExam: {
+        success: {
+            create: "exam is created and added to unit successfully"
+        },
+        faild: {
+            create: "can't add exam to this unit, because unit contains exam already"
+        }
     },
     lesson: {
         success: {

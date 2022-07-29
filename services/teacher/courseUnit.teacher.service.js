@@ -20,6 +20,9 @@ exports.updateUnit = async (query, newUnitData) => {
 exports.getUnit = async query => await Unit.findOne(query);
 // .populate("Unit Revison");
 
+
+exports.getSomeFieldsFromUnit = async (query, fields) => await Unit.findOne(query).select(...fields);
+
 exports.addLessonToUnit = async (query, newLessonData) => {
     let lessonIsAdded = await Unit.updateOne(query, { $push: { lessons: newLessonData } });
 
