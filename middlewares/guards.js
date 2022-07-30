@@ -34,7 +34,7 @@ exports.isStudent = async (req, res, next) => {
         };
 
         next();
-    } catch (_) {
+    } catch (e) {
         let newError = new APIError(status.INTERNAL_SERVER_ERROR, {
             success: false,
             errorName: "serverError",

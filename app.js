@@ -25,14 +25,15 @@ let profileStudentRoutes = require("./routes/students/profile.student.router");
 let courseUnitStudentRoutes = require("./routes/students/courseUnit.student.router");
 let lessonStudentRoutes = require("./routes/students/lesson.student.router");
 // let unitExamStudentRoutes = require("./routes/students/unitExam.student.router");
-
+let unitRevisionStudentRoutes = require("./routes/students/unitRevision.student.router");
 
 app.use("/students/auth", authStudentRoutes);
 app.use("/students/grades", gradeStudentRoutes);
 app.use("/students/courses", courseStudentRoutes);
 app.use("/students/profile", profileStudentRoutes);
-app.use("/students/courses", courseUnitStudentRoutes)
-app.use("/students/courses", lessonStudentRoutes)
+app.use("/students/courses", courseUnitStudentRoutes);
+app.use("/students/courses", lessonStudentRoutes);
+app.use("/students/courses", unitRevisionStudentRoutes);
 
 
 // teacher routes
