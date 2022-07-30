@@ -20,6 +20,9 @@ exports.updateUnit = async (query, newUnitData) => {
 exports.getUnit = async query => await Unit.findOne(query);
 // .populate("Unit Revison");
 
+
+exports.getSomeFieldsFromUnit = async (query, fields) => await Unit.findOne(query).select(...fields);
+
 exports.addLessonToUnit = async (query, newLessonData) => {
     let lessonIsAdded = await Unit.updateOne(query, { $push: { lessons: newLessonData } });
 
@@ -52,4 +55,38 @@ exports.deleteLessonFromUnit = async (unitId, lessonId) => {
     );
 
     return lessonIsDeleted.modifiedCount === 1 ? true : handleUpdateErrors(lessonIsDeleted);
+}
+
+exports.addRevisonToUnit = async (query, newRevisionData) => {
+    let revisionIsAdded = await Unit.updateOne(query, { $push: { revisions: newRevisionData } });
+
+    return revisionIsAdded.modifiedCount === 1 ? true : handleUpdateErrors(revisionIsAdded);
+}
+
+exports.updateRevisionInUnit = async (unitId, revisionId, newRevisionData) => {
+    let unitIsUpdated = await Unit.updateOne(
+        {
+            _id: unitId,
+            "revisions.revisionId": revisionId
+        },
+        {
+            $set: { 'revisions.$.name': newRevisionData.name, 'revisions.$.arrangement': newRevisionData.arrangement }
+        }
+    );
+
+    return unitIsUpdated.modifiedCount === 1 ? true : handleUpdateErrors(unitIsUpdated);
+}
+
+
+exports.deleteRevisionFromUnit = async (unitId, revisionId) => {
+    let revisionIsDeleted = await Unit.updateOne(
+        {
+            _id: unitId
+        },
+        {
+            $pull: { revisions: { revisionId } }
+        }
+    );
+
+    return revisionIsDeleted.modifiedCount === 1 ? true : handleUpdateErrors(revisionIsDeleted);
 }

@@ -46,7 +46,7 @@ exports.store = async (req, res, next) => {
 exports.update = async (req, res, next) => {
     let { unitId, lessonId } = req.params;
     let { name, arrangement, video, description } = req.body;
-    let u = await lessonService.updateLesson({ _id: lessonId }, {
+    await lessonService.updateLesson({ _id: lessonId }, {
         name,
         arrangement,
         video,

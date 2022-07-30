@@ -79,7 +79,14 @@ module.exports = {
         faild: {
             update: "something went wrong, when update this unit"
         }
-
+    },
+    unitExam: {
+        success: {
+            create: "exam is created and added to unit successfully"
+        },
+        faild: {
+            create: "can't add exam to this unit, because unit contains exam already"
+        }
     },
     lesson: {
         success: {
@@ -90,6 +97,18 @@ module.exports = {
         faild: {
             update: "something went wrong, when update this lesson",
             delete: "lesson not found to delete"
+        }
+
+    },
+    revision: {
+        success: {
+            create: "revision is created and added to course successfully",
+            update: "revision is updated Successfully",
+            delete: "revision is deleted successfully"
+        },
+        faild: {
+            update: "something went wrong, when update this revision",
+            delete: "revision not found to delete"
         }
 
     }
