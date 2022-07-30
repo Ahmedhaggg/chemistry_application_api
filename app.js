@@ -24,6 +24,8 @@ let courseStudentRoutes = require("./routes/students/course.student.router");
 let profileStudentRoutes = require("./routes/students/profile.student.router");
 let courseUnitStudentRoutes = require("./routes/students/courseUnit.student.router");
 let lessonStudentRoutes = require("./routes/students/lesson.student.router");
+// let unitExamStudentRoutes = require("./routes/students/unitExam.student.router");
+
 
 app.use("/students/auth", authStudentRoutes);
 app.use("/students/grades", gradeStudentRoutes);
@@ -40,6 +42,7 @@ let gradeTeacherRoutes = require("./routes/teacher/grade.teacher.router");
 let courseUnitTeacherRoutes = require("./routes/teacher/courseUnit.teacher.router");
 let lessonTeacherRoutes = require("./routes/teacher/lesson.teacher.router");
 let UnitExamTeacherRoutes = require("./routes/teacher/unitExam.teacher.router")
+let unitRevisionTeacherRoutes = require("./routes/teacher/unitRevision.teacher.router");
 
 app.use("/teacher/auth", authTeacherRoutes);
 app.use("/teacher/courses", courseTeacherRoutes);
@@ -47,7 +50,15 @@ app.use("/teacher/grades", gradeTeacherRoutes);
 app.use("/teacher/courses", courseUnitTeacherRoutes);
 app.use("/teacher/units", lessonTeacherRoutes);
 app.use("/teacher/units", UnitExamTeacherRoutes)
+app.use("/teacher/units", unitRevisionTeacherRoutes)
 
+app.use((req, res, next) => {
+    console.log(req);
+    res.status(404).json({
+        success: false,
+        message: "not found"
+    })
+})
 app.use((err, req, res, next) => {
     console.log(err)
     res.status(err.httpStatusCode || 500).json({

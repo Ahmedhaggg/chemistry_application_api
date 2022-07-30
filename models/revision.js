@@ -1,34 +1,40 @@
 let { Schema, Types, model } = require("mongoose");
-
+let messages = require("../helpers/messages");
 
 let revisionSchema = new Schema({
     name: {
         type: String,
-        required: true
+        required: [true, messages.genrale.required],
     },
     description: {
         type: String,
-        required: true
+        required: [true, messages.genrale.required],
     },
     video: {
         type: String,
-        required: true
+        required: [true, messages.genrale.required],
     },
     arrangement: {
         type: Number,
-        required: true
+        required: [true, messages.genrale.required],
     },
     exam: {
+        _id: false,
         type: {
+            _id: false,
             degree: Number,
             questions: [
                 {
                     question: String,
-                    answer: String
+                    answers: [
+                        String
+                    ],
+                    correctAnswer: String,
+                    _id: false
                 }
             ]
         },
-        required: true
+        required: [true, messages.genrale.required],
     }
 });
 
