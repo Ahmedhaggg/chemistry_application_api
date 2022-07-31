@@ -16,7 +16,11 @@ let courseSchema = new Schema({
         default: []
     },
     revisions: {
-        type: [{ type: Types.ObjectId, ref: "Revision" }],
+        type: [{
+            _id: false,
+            unitId: { type: Types.ObjectId, ref: "Unit" },
+            name: String
+        }],
         default: []
     }
 })
