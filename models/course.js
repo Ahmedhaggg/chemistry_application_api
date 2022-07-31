@@ -11,15 +11,17 @@ let courseSchema = new Schema({
         type: [{
             _id: false,
             unitId: { type: Types.ObjectId, ref: "Unit" },
-            name: String
+            name: String,
+            arrangement: Number
         }],
         default: []
     },
     revisions: {
         type: [{
             _id: false,
-            unitId: { type: Types.ObjectId, ref: "Unit" },
-            name: String
+            revisionId: { type: Types.ObjectId, ref: "Revision" },
+            name: String,
+            arrangement: Number
         }],
         default: []
     }
