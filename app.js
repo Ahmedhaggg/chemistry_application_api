@@ -45,7 +45,7 @@ let lessonTeacherRoutes = require("./routes/teacher/lesson.teacher.router");
 let UnitExamTeacherRoutes = require("./routes/teacher/unitExam.teacher.router")
 let unitRevisionTeacherRoutes = require("./routes/teacher/unitRevision.teacher.router");
 let courseRevisionTeacherRoutes = require("./routes/teacher/courseRevision.teacher.router");
-
+let studentAcceptingTeacherRoutes = require("./routes/teacher/studentAccepting.teacher.router");
 
 app.use("/teacher/auth", authTeacherRoutes);
 app.use("/teacher/courses", courseTeacherRoutes);
@@ -55,6 +55,7 @@ app.use("/teacher/units", lessonTeacherRoutes);
 app.use("/teacher/units", UnitExamTeacherRoutes)
 app.use("/teacher/units", unitRevisionTeacherRoutes)
 app.use("/teacher/courses", courseRevisionTeacherRoutes);
+app.use("/teacher/students", studentAcceptingTeacherRoutes)
 
 app.use((req, res, next) => {
     console.log(req);
