@@ -2,13 +2,14 @@ const APIError = require("../../errors/api.error");
 let status = require("../../errors/status");
 let messages = require("../../helpers/messages");
 let revisionService = require("../../services/teacher/revision.teacher.service");
-let unitService = require("../../services/teacher/courseUnit.teacher.service");
+let courseService = require("../../services/teacher/course.teacher.service");
 
 exports.index = async (req, res, next) => {
-    let { unitId } = req.params;
+    let { courseId } = req.params;
 
-    let unitRevisions = await revisionService.getCourseRevisons({ _id: unitId });
-    if (!unitRevisions)
+    let courseRevisions = await revisionService.getCourseRevisons({ _id: courseId });
+
+    if (!courseRevisions)
         throw new APIError(status.NOT_FOUND, {
             success: false,
             message: messages.notFound
@@ -16,12 +17,12 @@ exports.index = async (req, res, next) => {
 
     res.status(status.OK).json({
         success: true,
-        unitRevisions
+        courseRevisions
     })
 }
 
 exports.store = async (req, res, next) => {
-    let { unitId } = req.params;
+    let { courseId } = req.params;
     let { name, arrangement, video, exam, description } = req.body;
 
     let revision = await revisionService.createRevision({
@@ -32,7 +33,7 @@ exports.store = async (req, res, next) => {
         description
     });
 
-    await unitService.addRevisonToUnit({ _id: unitId }, { revisionId: revision._id, name, arrangement });
+    await courseService.addRevisionToCourse({ _id: courseId }, { revisionId: revision._id, name, arrangement });
 
     res.status(status.OK).json({
         success: true,
@@ -59,7 +60,7 @@ exports.show = async (req, res, next) => {
 }
 
 exports.update = async (req, res, next) => {
-    let { unitId, revisionId } = req.params;
+    let { courseId, revisionId } = req.params;
     let { name, arrangement, video, description } = req.body;
 
     await revisionService.updateRevision({ _id: revisionId }, {
@@ -69,7 +70,7 @@ exports.update = async (req, res, next) => {
         description
     });
 
-    await unitService.updateRevisionInUnit(unitId, revisionId, { arrangement, name });
+    await courseService.updateRevisionInCourse(courseId, revisionId, { arrangement, name });
 
     res.status(status.OK).json({
         success: true,
@@ -78,7 +79,7 @@ exports.update = async (req, res, next) => {
 }
 
 exports.destroy = async (req, res, next) => {
-    let { unitId, revisionId } = req.params;
+    let { courseId, revisionId } = req.params;
 
     let deletedRevision = await revisionService.deleteRevision({ _id: revisionId });
 
@@ -88,7 +89,7 @@ exports.destroy = async (req, res, next) => {
             message: messages.revision.faild.delete
         });
 
-    await unitService.deleteRevisionFromUnit(unitId, revisionId);
+    await courseService.deleteRevisionFromCourse(courseId, revisionId);
 
     res.status(status.OK).json({
         success: true,

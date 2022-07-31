@@ -39,6 +39,42 @@ exports.updateUnitNameInCourse = async (courseId, unitId, newName) => {
             $set: { 'units.$.name': newName }
         }
     );
-    console.log(unitIsUpdated)
+
     return unitIsUpdated.modifiedCount === 1 ? true : handleUpdateErrors(unitIsUpdated);
+}
+
+exports.addRevisionToCourse = async (query, newRevisionData) => {
+    let revisionIsAdded = await Course.updateOne(query, { $push: { revisions: newRevisionData } });
+
+    return revisionIsAdded.modifiedCount === 1 ? true : handleUpdateErrors(revisionIsAdded);
+}
+
+exports.updateRevisionInCourse = async (courseId, revisionId, newCourseData) => {
+    let revisionsIsUpdated = await Course.updateOne(
+        {
+            _id: courseId,
+            "revisions.revisionId": revisionId
+        },
+        {
+            $set: {
+                'revisions.$.name': newCourseData.name,
+                'revisions.$.arrangement': newCourseData.arrangement
+            }
+        }
+    );
+
+    return revisionsIsUpdated.modifiedCount === 1 ? true : handleUpdateErrors(revisionsIsUpdated);
+}
+
+exports.deleteRevisionFromCourse = async (courseId, revisionId) => {
+    let revisionIsDeleted = await Course.updateOne(
+        {
+            _id: courseId
+        },
+        {
+            $pull: { revisions: { revisionId } }
+        }
+    );
+
+    return revisionIsDeleted.modifiedCount === 1 ? true : handleUpdateErrors(revisionIsDeleted);
 }
