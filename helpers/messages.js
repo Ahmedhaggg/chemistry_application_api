@@ -111,6 +111,16 @@ module.exports = {
             delete: "revision not found to delete"
         }
 
+    },
+    acceptedStudent: {
+        success: {
+            accepted: "student is accepted successfully",
+            delete: "unaccepted student is deleted successfully"
+        },
+        faild: {
+            alreadyAccepted: "can't accept this student because student is accpeted already",
+            delete: "unaccepted student not found to delete"
+        }
     }
 }
 
