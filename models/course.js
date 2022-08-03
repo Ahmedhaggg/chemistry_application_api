@@ -11,6 +11,14 @@ let courseSchema = new Schema({
         type: [{ type: Types.ObjectId, ref: "Unit" }],
         default: []
     },
+    numberOfUnits: {
+        type: Number,
+        required: [true, messages.genrale.required]
+    },
+    numberOfRevisions: {
+        type: Number,
+        required: [true, messages.genrale.required]
+    },
     revisions: {
         type: [{ type: Types.ObjectId, ref: "Revision" }],
         default: []

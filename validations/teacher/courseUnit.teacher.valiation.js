@@ -8,10 +8,19 @@ module.exports = {
                 return [
                     check("name").notEmpty().withMessage(messages.genrale.required),
                     check("arrangement").notEmpty().withMessage(messages.genrale.required)
+                        .isInt().withMessage(messages.genrale.isNumber),
+                    check("numberOfRevisions").notEmpty().withMessage(messages.genrale.required)
+                        .isInt().withMessage(messages.genrale.isNumber),
+                    check("numberOfLessons").notEmpty().withMessage(messages.genrale.required)
+                        .isInt().withMessage(messages.genrale.isNumber),
                 ];
             case "update":
                 return [
-                    check("name").notEmpty().withMessage(messages.genrale.required)
+                    check("name").notEmpty().withMessage(messages.genrale.required),
+                    check("numberOfRevisions").notEmpty().withMessage(messages.genrale.required)
+                        .isInt().withMessage(messages.genrale.isNumber),
+                    check("numberOfLessons").notEmpty().withMessage(messages.genrale.required)
+                        .isInt().withMessage(messages.genrale.isNumber),
                 ];
         }
     }

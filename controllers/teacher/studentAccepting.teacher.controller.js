@@ -27,7 +27,7 @@ exports.show = async (req, res, next) => {
 
 exports.update = async (req, res, next) => {
     let { studentId } = req.params;
-    let { nextRevisionId, nextUnitId, nextLessonId, nextUnitRevisionId } = req.body;
+    let { nextRevision, nextUnit, nextLesson, nextUnitRevision } = req.body;
 
     let student = await studentService.getUnAcceptedStudent({ _id: studentId }, ["_id"]);
 
@@ -37,11 +37,11 @@ exports.update = async (req, res, next) => {
     await studentService.updateStudent({ _id: studentId }, {
         accepted: true,
         courseProgress: {
-            unitId: nextUnitId,
-            lessonId: nextLessonId,
-            revisionId: nextUnitRevisionId || null
+            currentUnit: nextUnit,
+            lessonId: nextLesson,
+            revisionId: nextUnitRevision || null
         },
-        CourseRevisionProgress: nextRevisionId || null
+        CourseRevisionProgress: nextRevision || null
     });
 
     res.status(status.OK).json({

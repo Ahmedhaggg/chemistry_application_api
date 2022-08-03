@@ -33,7 +33,8 @@ module.exports = {
         required: "field is required",
         unique: "it is used before",
         lowercase: "letter should be capital",
-        incorrectId: "incorrect id of this field"
+        incorrectId: "incorrect id of this field",
+        isNumber: "should be number"
     },
     register: {
         success: "success register, You must wait until you are accepted by the teacher",

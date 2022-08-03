@@ -34,7 +34,7 @@ exports.store = async (req, res, next) => {
         description
     });
 
-    await unitService.addLessonToUnit({ _id: unitId }, { lessonId: lesson._id, name });
+    await unitService.addLessonToUnit({ _id: unitId }, lesson._id);
 
     res.status(status.OK).json({
         success: true,
@@ -44,16 +44,13 @@ exports.store = async (req, res, next) => {
 }
 
 exports.update = async (req, res, next) => {
-    let { unitId, lessonId } = req.params;
-    let { name, arrangement, video, description } = req.body;
+    let { lessonId } = req.params;
+    let { name, video, description } = req.body;
     await lessonService.updateLesson({ _id: lessonId }, {
         name,
-        arrangement,
         video,
         description
     });
-
-    await unitService.updateLessonInUnit(unitId, lessonId, name);
 
     res.status(status.OK).json({
         success: true,

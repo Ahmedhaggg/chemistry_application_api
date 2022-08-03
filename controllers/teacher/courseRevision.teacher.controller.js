@@ -33,7 +33,7 @@ exports.store = async (req, res, next) => {
         description
     });
 
-    await courseService.addRevisionToCourse({ _id: courseId }, { revisionId: revision._id, name, arrangement });
+    await courseService.addRevisionToCourse({ _id: courseId }, revision._id);
 
     res.status(status.OK).json({
         success: true,
@@ -60,17 +60,14 @@ exports.show = async (req, res, next) => {
 }
 
 exports.update = async (req, res, next) => {
-    let { courseId, revisionId } = req.params;
-    let { name, arrangement, video, description } = req.body;
+    let { revisionId } = req.params;
+    let { name, video, description } = req.body;
 
     await revisionService.updateRevision({ _id: revisionId }, {
         name,
-        arrangement,
         video,
         description
     });
-
-    await courseService.updateRevisionInCourse(courseId, revisionId, { arrangement, name });
 
     res.status(status.OK).json({
         success: true,

@@ -7,7 +7,7 @@ const APIError = require("../../errors/api.error");
 exports.index = async (req, res, next) => {
     let { courseId } = req.params;
 
-    let units = await courseService.getCourseUnits();
+    let units = await courseService.getCourseUnits({ _id: courseId });
 
     res.status(status.OK).json({
         success: true,
@@ -18,11 +18,11 @@ exports.index = async (req, res, next) => {
 
 exports.store = async (req, res, next) => {
     let { courseId } = req.params;
-    let { name, arrangement } = req.body;
+    let { name, arrangement, numberOfLessons, numberOfRevisions } = req.body;
 
-    let newUnit = await unitService.createUnit({ name, arrangement });
+    let newUnit = await unitService.createUnit({ name, arrangement, numberOfLessons, numberOfRevisions });
 
-    await courseService.addUnitToCourse({ _id: courseId }, { unitId: newUnit._id, name });
+    await courseService.addUnitToCourse({ _id: courseId }, newUnit._id);
 
     res.status(status.OK).json({
         success: true,
@@ -49,12 +49,10 @@ exports.show = async (req, res, next) => {
 }
 
 exports.update = async (req, res, next) => {
-    let { courseId, unitId } = req.params;
-    let { name } = req.body;
+    let { unitId } = req.params;
+    let { name, numberOfLessons, numberOfRevisions } = req.body;
 
-    await unitService.updateUnit({ _id: unitId }, { name });
-
-    await courseService.updateUnitNameInCourse(courseId, unitId, name);
+    await unitService.updateUnit({ _id: unitId }, { name, numberOfLessons, numberOfRevisions });
 
     res.status(status.OK).json({
         success: true,

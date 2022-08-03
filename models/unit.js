@@ -11,6 +11,14 @@ let UnitSchema = new Schema({
         type: Number,
         required: [true, messages.genrale.required]
     },
+    numberOfLessons: {
+        type: Number,
+        required: [true, messages.genrale.required]
+    },
+    numberOfRevisions: {
+        type: Number,
+        required: [true, messages.genrale.required]
+    },
     exam: {
         _id: false,
         type: {

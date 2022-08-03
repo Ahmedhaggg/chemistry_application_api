@@ -8,7 +8,6 @@ exports.createGrade = async gradeData => {
         newGrade.currentCourse = gradeData.currentCourse;
         return await newGrade.save();
     } catch (error) {
-        console.log(JSON.stringify(error, 0, 4))
         handleInsertErrors(error);
     }
 }
@@ -19,8 +18,7 @@ exports.updateGrade = async (query, newGredeData) => {
     return updatedGrede.modifiedCount === 1 ? true : handleUpdateErrors(newGredeData);
 }
 
-exports.getGrade = async query => await Grade.findOne(query);
-// .populate("Unit Revison");
+exports.getGrade = async query => await Grade.findOne(query).populate("currentCourse");
 
 exports.getAllGrades = async () => await Grade.find();
 

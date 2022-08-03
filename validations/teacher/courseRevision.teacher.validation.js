@@ -21,7 +21,6 @@ module.exports = {
             case "update":
                 return [
                     check("name").notEmpty().withMessage(messages.genrale.required),
-                    check("arrangement").notEmpty().withMessage(messages.genrale.required),
                     check("description").notEmpty().withMessage(messages.genrale.required),
                     check("video").notEmpty().withMessage(messages.genrale.required)
                 ];

@@ -1,7 +1,8 @@
 let { Revision, Unit, Course } = require("../../models");
 let { handleInsertErrors, handleUpdateErrors } = require("../../errors/databaseErrorHandler");
 
-exports.getUnitRevisons = async query => await Unit.findOne(query).select("revisions");
+exports.getUnitRevisons = async query => await Unit.findOne(query).select("_id").populate("revisions", "name arrangement");
+
 exports.getCourseRevisons = async query => await Course.findOne(query).select("revisions");
 
 exports.createRevision = async newData => {

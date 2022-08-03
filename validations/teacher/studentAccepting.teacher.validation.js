@@ -7,8 +7,10 @@ module.exports = {
             case "accept":
                 return [
                     // check("nextRevisionId").notEmpty().withMessage(messages.genrale.required),
-                    check("nextUnitId").notEmpty().withMessage(messages.genrale.required),
-                    check("nextLessonId").notEmpty().withMessage(messages.genrale.required),
+                    check("nextUnit[unitId]").notEmpty().withMessage(messages.genrale.required),
+                    check("nextUnit[arrangement]").notEmpty().withMessage(messages.genrale.required),
+                    check("nextLesson[lessonId]").notEmpty().withMessage(messages.genrale.required),
+                    check("nextLesson[arrangement]").notEmpty().withMessage(messages.genrale.required),
                     // check("nextUnitRevisionId").notEmpty().withMessage(messages.genrale.required)
                 ];
 

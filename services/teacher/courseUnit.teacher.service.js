@@ -6,6 +6,8 @@ exports.createUnit = async unitData => {
         let newUnit = new Unit();
         newUnit.name = unitData.name;
         newUnit.arrangement = unitData.arrangement;
+        newUnit.numberOfLessons = unitData.numberOfLessons;
+        newUnit.numberOfRevisions = unitData.numberOfRevisions;
         return await newUnit.save();
     } catch (error) {
         handleInsertErrors(error);
@@ -17,32 +19,31 @@ exports.updateUnit = async (query, newUnitData) => {
     return updatedUnit.modifiedCount === 1 ? true : handleUpdateErrors(updatedUnit);
 }
 
-exports.getUnit = async query => await Unit.findOne(query);
-// .populate("Unit Revison");
+exports.getUnit = async query => await Unit.findOne(query)
+    .populate({
+        path: "lessons",
+        options: {
+            sort: { 'arrangement': 1 }
+        },
+        select: "_id name arrangement"
+    })
+    .populate({
+        path: "revisions",
+        options: {
+            sort: { 'arrangement': 1 }
+        },
+        select: "_id name arrangement"
+    })
 
 
 exports.getSomeFieldsFromUnit = async (query, fields) => await Unit.findOne(query).select(...fields);
 
-exports.addLessonToUnit = async (query, newLessonData) => {
-    let lessonIsAdded = await Unit.updateOne(query, { $push: { lessons: newLessonData } });
+exports.addLessonToUnit = async (query, newLessonId) => {
+    let lessonIsAdded = await Unit.updateOne(query, { $push: { lessons: newLessonId } });
 
     return lessonIsAdded.modifiedCount === 1 ? true : handleUpdateErrors(lessonIsAdded);
 }
 
-
-exports.updateLessonInUnit = async (unitId, lessonId, newLessonName) => {
-    let unitIsUpdated = await Unit.updateOne(
-        {
-            _id: unitId,
-            "lessons.lessonId": lessonId
-        },
-        {
-            $set: { 'lessons.$.name': newLessonName }
-        }
-    );
-
-    return unitIsUpdated.modifiedCount === 1 ? true : handleUpdateErrors(unitIsUpdated);
-}
 
 exports.deleteLessonFromUnit = async (unitId, lessonId) => {
     let lessonIsDeleted = await Unit.updateOne(
@@ -50,31 +51,17 @@ exports.deleteLessonFromUnit = async (unitId, lessonId) => {
             _id: unitId
         },
         {
-            $pull: { lessons: { lessonId } }
+            $pull: { lessons: lessonId }
         }
     );
 
     return lessonIsDeleted.modifiedCount === 1 ? true : handleUpdateErrors(lessonIsDeleted);
 }
 
-exports.addRevisonToUnit = async (query, newRevisionData) => {
-    let revisionIsAdded = await Unit.updateOne(query, { $push: { revisions: newRevisionData } });
+exports.addRevisonToUnit = async (query, newRevisionId) => {
+    let revisionIsAdded = await Unit.updateOne(query, { $push: { revisions: newRevisionId } });
 
     return revisionIsAdded.modifiedCount === 1 ? true : handleUpdateErrors(revisionIsAdded);
-}
-
-exports.updateRevisionInUnit = async (unitId, revisionId, newRevisionData) => {
-    let unitIsUpdated = await Unit.updateOne(
-        {
-            _id: unitId,
-            "revisions.revisionId": revisionId
-        },
-        {
-            $set: { 'revisions.$.name': newRevisionData.name, 'revisions.$.arrangement': newRevisionData.arrangement }
-        }
-    );
-
-    return unitIsUpdated.modifiedCount === 1 ? true : handleUpdateErrors(unitIsUpdated);
 }
 
 
@@ -84,7 +71,7 @@ exports.deleteRevisionFromUnit = async (unitId, revisionId) => {
             _id: unitId
         },
         {
-            $pull: { revisions: { revisionId } }
+            $pull: { revisions: revisionId }
         }
     );
 

@@ -7,7 +7,8 @@ let unitService = require("../../services/teacher/courseUnit.teacher.service");
 exports.index = async (req, res, next) => {
     let { unitId } = req.params;
 
-    let unitRevisions = await revisionService.getCourseRevisons({ _id: unitId });
+    let unitRevisions = await revisionService.getUnitRevisons({ _id: unitId });
+
     if (!unitRevisions)
         throw new APIError(status.NOT_FOUND, {
             success: false,
@@ -16,7 +17,7 @@ exports.index = async (req, res, next) => {
 
     res.status(status.OK).json({
         success: true,
-        unitRevisions
+        unit: unitRevisions
     })
 }
 
@@ -32,7 +33,7 @@ exports.store = async (req, res, next) => {
         description
     });
 
-    await unitService.addRevisonToUnit({ _id: unitId }, { revisionId: revision._id, name, arrangement });
+    await unitService.addRevisonToUnit({ _id: unitId }, revision._id);
 
     res.status(status.OK).json({
         success: true,
@@ -59,17 +60,14 @@ exports.show = async (req, res, next) => {
 }
 
 exports.update = async (req, res, next) => {
-    let { unitId, revisionId } = req.params;
-    let { name, arrangement, video, description } = req.body;
+    let { revisionId } = req.params;
+    let { name, video, description } = req.body;
 
     await revisionService.updateRevision({ _id: revisionId }, {
         name,
-        arrangement,
         video,
         description
     });
-
-    await unitService.updateRevisionInUnit(unitId, revisionId, { arrangement, name });
 
     res.status(status.OK).json({
         success: true,
