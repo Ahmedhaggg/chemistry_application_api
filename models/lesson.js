@@ -1,21 +1,22 @@
 let { Schema, model } = require("mongoose");
+let messages = require("../helpers/messages");
 
 let lessonSchema = new Schema({
     name: {
         type: String,
-        required: true
+        required: [true, messages.genrale.required]
     },
     description: {
         type: String,
-        required: true
+        required: [true, messages.genrale.required]
     },
     video: {
         type: String,
-        required: true
+        required: [true, messages.genrale.required]
     },
     arrangement: {
         type: Number,
-        required: true
+        required: [true, messages.genrale.required]
     },
     exam: {
         _id: false,
@@ -33,7 +34,7 @@ let lessonSchema = new Schema({
                 }
             ]
         },
-        required: true
+        required: [true, messages.genrale.required]
     }
 });
 

@@ -39,13 +39,28 @@ const studentSchema = new Schema({
     grade: { type: Types.ObjectId, ref: "Grade", required: [true, messages.genrale.required] },
     courseProgress: {
         type: {
-            unitId: { type: Types.ObjectId, ref: "Unit" },
-            lessonId: { type: Types.ObjectId, ref: "Lesson" },
-            revisionId: { type: Types.ObjectId, ref: "Revision" }
+            currentUnit: {
+                unitId: { type: Types.ObjectId, ref: "Unit" },
+                arrangement: Number
+            },
+            currentLesson: {
+                lessonId: { type: Types.ObjectId, ref: "Lesson" },
+                arrangement: Number
+            },
+            currentRevision: {
+                revisionId: { type: Types.ObjectId, ref: "Revision" },
+                arrangemnt: Number
+            }
         },
         required: false
     },
-    CourseRevisionProgress: { type: Types.ObjectId, ref: "Revison", required: false },
+    CourseRevisionProgress: {
+        type: {
+            revisionId: { type: Types.ObjectId, ref: "Revison", required: false },
+            arrangement: Number
+        },
+        required: false
+    },
     studentUnitExams: {
         type: [{ type: Types.ObjectId, ref: "StudentUnitExam" }],
         default: []

@@ -30,24 +30,11 @@ let UnitSchema = new Schema({
         required: false
     },
     lessons: {
-        type: [
-            {
-                lessonId: { type: Types.ObjectId, ref: "Lesson" },
-                name: String,
-                _id: false
-            }
-        ],
+        type: [{ type: Types.ObjectId, ref: "Lesson" }],
         default: []
     },
     revisions: {
-        type: [
-            {
-                revisionId: { type: Types.ObjectId, ref: "Revision" },
-                name: String,
-                arrangement: Number,
-                _id: false
-            }
-        ],
+        type: [{ type: Types.ObjectId, ref: "Revision" }],
         default: []
     }
 });

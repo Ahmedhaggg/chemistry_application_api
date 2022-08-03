@@ -8,21 +8,11 @@ let courseSchema = new Schema({
         unique: true
     },
     units: {
-        type: [{
-            _id: false,
-            unitId: { type: Types.ObjectId, ref: "Unit" },
-            name: String,
-            arrangement: Number
-        }],
+        type: [{ type: Types.ObjectId, ref: "Unit" }],
         default: []
     },
     revisions: {
-        type: [{
-            _id: false,
-            revisionId: { type: Types.ObjectId, ref: "Revision" },
-            name: String,
-            arrangement: Number
-        }],
+        type: [{ type: Types.ObjectId, ref: "Revision" }],
         default: []
     }
 })
