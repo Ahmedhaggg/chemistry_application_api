@@ -54,13 +54,6 @@ const studentSchema = new Schema({
         },
         required: false
     },
-    CourseRevisionProgress: {
-        type: {
-            revisionId: { type: Types.ObjectId, ref: "Revison", required: false },
-            arrangement: Number
-        },
-        required: false
-    },
     studentUnitExams: {
         type: [{ type: Types.ObjectId, ref: "StudentUnitExam" }],
         default: []
