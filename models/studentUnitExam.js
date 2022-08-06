@@ -12,10 +12,6 @@ let studentExamSchema = new Schema({
         ref: "Student",
         required: [true, messages.genrale.required]
     },
-    unitName: {
-        type: String,
-        required: [true, messages.genrale.required]
-    },
     degree: {
         type: Number,
         required: false
@@ -23,8 +19,10 @@ let studentExamSchema = new Schema({
     lessons: {
         type: [
             {
-                lessonId: Types.ObjectId,
-                lessonName: String,
+                lessonId: {
+                    type: Types.ObjectId,
+                    ref: "Lesson"
+                },
                 degree: Number,
                 _id: false
             }
@@ -43,10 +41,6 @@ let studentExamSchema = new Schema({
             }
         ],
         default: []
-    },
-    arrangement: {
-        type: Number,
-        required: [true, messages.genrale.required],
     }
 })
 

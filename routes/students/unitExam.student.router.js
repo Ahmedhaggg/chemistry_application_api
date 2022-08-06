@@ -4,9 +4,8 @@ let catchErrors = require("../../middlewares/catchErrors");
 let guards = require("../../middlewares/guards");
 let courseGuards = require("../../middlewares/coursesGuards");
 
-router.get("/:courseId/units/:unitId",
+router.get("/:unitId",
     guards.isStudent,
-    courseGuards.isStudentCourse,
     catchErrors(unitExamStudentController.show)
 );
 

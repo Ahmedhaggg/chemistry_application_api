@@ -3,7 +3,7 @@ let { handleInsertErrors, handleUpdateErrors } = require("../../errors/databaseE
 
 exports.getUnitRevisons = async query => await Unit.findOne(query).select("_id").populate("revisions", "name arrangement");
 
-exports.getCourseRevisons = async query => await Course.findOne(query).select("revisions");
+exports.getCourseRevisons = async query => await Course.findOne(query).select("_id").populate("revisions", "name arrangement");
 
 exports.createRevision = async newData => {
     try {

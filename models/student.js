@@ -38,6 +38,7 @@ const studentSchema = new Schema({
     currentCourse: { type: Types.ObjectId, ref: "Course", required: [true, messages.genrale.required] },
     grade: { type: Types.ObjectId, ref: "Grade", required: [true, messages.genrale.required] },
     courseProgress: {
+        _id: false,
         type: {
             currentUnit: {
                 unitId: { type: Types.ObjectId, ref: "Unit" },
@@ -47,25 +48,19 @@ const studentSchema = new Schema({
                 lessonId: { type: Types.ObjectId, ref: "Lesson" },
                 arrangement: Number
             },
-            currentRevision: {
+            currentUnitRevision: {
                 revisionId: { type: Types.ObjectId, ref: "Revision" },
                 arrangemnt: Number
             }
         },
         required: false
     },
-    studentUnitExams: {
-        type: [{ type: Types.ObjectId, ref: "StudentUnitExam" }],
-        default: []
-    },
-    courseRevisionExam: {
-        type: [
-            {
-                revisionId: [{ type: Types.ObjectId, ref: "StudentUnitExam" }],
-                degree: Number
-            }
-        ],
-        default: []
+    courseRevisionProgress: {
+        type: {
+            revisionId: Types.ObjectId,
+            arrangement: Number
+        },
+        required: false
     },
     lastLogin: {
         type: Date,

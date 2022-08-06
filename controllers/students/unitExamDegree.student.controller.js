@@ -1,82 +1,54 @@
 const APIError = require("../../errors/api.error");
-let unitService = require("../../services/students/courseUnit.student.service");
 let messages = require("../../helpers/messages");
 let status = require("../../errors/status");
-let examService = require("../../services/students/exams.student.service");
+let unitExamDegreeService = require("../../services/students/studentUnitExam.student.service");
+let courseExamsDegreeService = require("../../services/students/studentCourseExam.student.service");
 
 
 exports.store = async (req, res, next) => {
-    let { unitId, name } = req.body
+    let { unitId, degree } = req.body;
+    let studentId = req.student.studentId;
+
+    await unitExamDegreeService.saveUnitDegree({ unitId, studentId }, degree);
+
+    res.status(status.OK).json({
+        success: true,
+        message: messages.examDegree.success.saveUnitDegree
+    });
 }
 
-exports.showUnitsExamsDegrees = async (req, res, next) => {
+exports.index = async (req, res, next) => {
     let { id } = req.student;
 
-    let studentExamsDegrees = await examService.getStudentExamsDegrees({ studentId: id });
+    let unitsExamsDegrees = await courseExamsDegreeService.getAllUnitsExamsDegrees({ studentId: id });
 
-    if (!studentExamsDegrees)
+    if (!unitsExamsDegrees)
         throw new APIError(status.NOT_FOUND, {
             message: messages.notFound,
-            studentExamsDegrees
+            unitsExamsDegrees
         });
 
     res.status(status.OK).json({
         success: true,
-        studentExamsDegrees
+        unitsExamsDegrees
     })
 }
 
-exports.showUnitExamDegree = async (req, res, next) => {
+exports.show = async (req, res, next) => {
     let { unitId } = req.params;
     let { id } = req.student;
 
-    let UnitExamsDegree = await examService.getStudentUnitExams({ studentId: id, unitId });
+    let UnitExamDegree = await unitExamDegreeService.getUnitDegree({ studentId: id, unitId });
 
-    if (!UnitExamsDegree)
+    if (!UnitExamDegree)
         throw new APIError(status.NOT_FOUND, {
             message: messages.notFound,
-            UnitExamsDegree
+            UnitExamDegree
         });
 
     res.status(status.OK).json({
         success: true,
-        UnitExamsDegree
+        UnitExamDegree
     })
 
-}
-
-exports.showUnitLessonsExamsDegrees = async (req, res, next) => {
-    let { unitId } = req.params;
-    let { id } = req.student;
-
-    let UnitLessonsExamsDegrees = await examService.getStudentUnitLessonsExams({ studentId: id, unitId });
-
-    if (!UnitLessonsExamsDegrees)
-        throw new APIError(status.NOT_FOUND, {
-            message: messages.notFound,
-            UnitLessonsExamsDegrees
-        });
-
-    res.status(status.OK).json({
-        success: true,
-        UnitLessonsExamsDegrees
-    })
-}
-
-exports.showLessonsDegree = async (req, res, next) => {
-    let { unitId, lessonId } = req.params;
-    let { id } = req.student;
-
-    let lessonExamDegree = await examService.getStudentUnitLessonsExams({ studentId: id, unitId, lessonId });
-
-    if (!lessonExamDegree)
-        throw new APIError(status.NOT_FOUND, {
-            message: messages.notFound,
-            lessonExamDegree
-        });
-
-    res.status(status.OK).json({
-        success: true,
-        lessonExamDegree
-    })
 }

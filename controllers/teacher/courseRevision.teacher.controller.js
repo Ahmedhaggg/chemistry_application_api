@@ -17,7 +17,7 @@ exports.index = async (req, res, next) => {
 
     res.status(status.OK).json({
         success: true,
-        courseRevisions
+        courseRevisions: courseRevisions.revisions
     })
 }
 

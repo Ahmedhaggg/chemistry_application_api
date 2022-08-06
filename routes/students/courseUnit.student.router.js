@@ -6,7 +6,6 @@ let courseGuards = require("../../middlewares/coursesGuards");
 
 router.get("/:courseId/units/:unitId",
     guards.isStudent,
-    courseGuards.isStudentCourse,
     catchErrors(courseUnitStudentController.show)
 );
 

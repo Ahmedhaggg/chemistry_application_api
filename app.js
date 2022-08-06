@@ -21,19 +21,52 @@ require("./config/database")
 let authStudentRoutes = require("./routes/students/auth.student.router");
 let gradeStudentRoutes = require("./routes/students/grade.student.router");
 let courseStudentRoutes = require("./routes/students/course.student.router");
+let courseRevisionStudentRoutes = require("./routes/students/courseRevision.student.router")
 let profileStudentRoutes = require("./routes/students/profile.student.router");
+let courseProgressStudentRoutes = require("./routes/students/courseProgress.student.router")
 let courseUnitStudentRoutes = require("./routes/students/courseUnit.student.router");
 let lessonStudentRoutes = require("./routes/students/lesson.student.router");
-// let unitExamStudentRoutes = require("./routes/students/unitExam.student.router");
-let unitRevisionStudentRoutes = require("./routes/students/unitRevision.student.router");
+let unitExamStudentRoutes = require("./routes/students/unitExam.student.router");
+let unitRevisionStudentRoutes = require("./routes/students/unitRevision.student.router");// stop
+let courseRevisionExamDegreeStudentRoutes = require("./routes/students/courseRevisionExamDegree.student.router");
+let unitExamDegreeStudentRoutes = require("./routes/students/unitExamDegree.student.router");
+let lessonExamDegreeStudentRoutes = require("./routes/students/lessonExamDegree.student.router");
+let unitRevisionExamDegreeStudentroutes = require("./routes/students/unitRevisionExamDegree.student.router");
 
-app.use("/students/auth", authStudentRoutes);
+
+app.use("/students/auth", authStudentRoutes)
 app.use("/students/grades", gradeStudentRoutes);
 app.use("/students/courses", courseStudentRoutes);
 app.use("/students/profile", profileStudentRoutes);
 app.use("/students/courses", courseUnitStudentRoutes);
-app.use("/students/courses", lessonStudentRoutes);
-app.use("/students/courses", unitRevisionStudentRoutes);
+app.use("/students/courses", courseRevisionStudentRoutes);
+app.use("/students/course-progress", courseProgressStudentRoutes);
+app.use("/students/units", lessonStudentRoutes);
+app.use("/students/units", unitExamStudentRoutes);
+app.use("/students/units", unitRevisionStudentRoutes);
+// degrees
+app.use("/students/exams-degrees/courses", courseRevisionExamDegreeStudentRoutes);
+app.use("/students/exams-degrees/courses", unitExamDegreeStudentRoutes);
+app.use("/students/exams-degrees/units", lessonExamDegreeStudentRoutes);
+app.use("/students/exams-degrees/units", unitRevisionExamDegreeStudentroutes);
+
+
+// course units
+// get all units degrees
+// get unit degree
+// post 
+// course revisions
+// get all units degrees
+// get unit degree
+// post 
+// unit lesson
+// get all lesson in unit
+// get lesson
+// post
+// unit revision
+// get all revisions in unit
+// get revision
+// post
 
 
 // teacher routes
@@ -46,6 +79,8 @@ let UnitExamTeacherRoutes = require("./routes/teacher/unitExam.teacher.router")
 let unitRevisionTeacherRoutes = require("./routes/teacher/unitRevision.teacher.router");
 let courseRevisionTeacherRoutes = require("./routes/teacher/courseRevision.teacher.router");
 let studentAcceptingTeacherRoutes = require("./routes/teacher/studentAccepting.teacher.router");
+
+
 
 app.use("/teacher/auth", authTeacherRoutes);
 app.use("/teacher/courses", courseTeacherRoutes);

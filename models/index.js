@@ -5,6 +5,7 @@ let Lesson = require("./lesson");
 let Unit = require("./unit");
 let Revision = require("./revision");
 let StudentUnitExam = require("./studentUnitExam");
+let StudentCourseExam = require("./studentCourseExam")
 let Teacher = require("./teacher");
 
 module.exports = {
@@ -15,6 +16,7 @@ module.exports = {
     Unit,
     Revision,
     StudentUnitExam,
-    Teacher
+    Teacher,
+    StudentCourseExam
 }
 

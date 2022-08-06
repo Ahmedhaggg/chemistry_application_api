@@ -2,24 +2,20 @@ let router = require("express").Router();
 let unitExamDegreeStudentController = require("../../controllers/students/unitExamDegree.student.controller");
 let catchErrors = require("../../middlewares/catchErrors");
 let guards = require("../../middlewares/guards");
-let courseGuards = require("../../middlewares/coursesGuards");
 
-router.get("/:courseId/degrees",
+router.get("/:courseId/units",
     guards.isStudent,
-    courseGuards.isStudentCourse,
     catchErrors(unitExamDegreeStudentController.index)
 );
 
-router.get("/:courseId/degrees/units/:unitId",
+router.get("/:courseId/units/:unitId",
     guards.isStudent,
-    courseGuards.isStudentCourse,
-    catchErrors(unitExamDegreeStudentController.showUnitExamDegree)
+    catchErrors(unitExamDegreeStudentController.show)
 );
 
-router.get("/:courseId/degrees/lessons/:lessonId",
+router.post("/:courseId/units/:unitId",
     guards.isStudent,
-    courseGuards.isStudentCourse,
-    catchErrors(unitExamDegreeStudentController.showLessonExamDegree)
+    catchErrors(unitExamDegreeStudentController.store)
 );
 
 module.exports = router;

@@ -2,7 +2,7 @@ const APIError = require("../../errors/api.error");
 let status = require("../../errors/status");
 let messages = require("../../helpers/messages");
 let studentService = require("../../services/teacher/student.teacher.service");
-
+let examService = require("../../services/teacher/studentExam.teacher.service")
 exports.index = async (req, res, next) => {
     let { limit, offset } = req.query;
     let unAcceptedStudents = await studentService.getAllUnAcceptedStudent({ limit, offset });
@@ -29,7 +29,7 @@ exports.update = async (req, res, next) => {
     let { studentId } = req.params;
     let { nextRevision, nextUnit, nextLesson, nextUnitRevision } = req.body;
 
-    let student = await studentService.getUnAcceptedStudent({ _id: studentId }, ["_id"]);
+    let student = await studentService.getUnAcceptedStudent({ _id: studentId }, ["_id currentCourse"]);
 
     if (!student)
         throw new APIError(status.NOT_FOUND, { message: messages.notFound });
@@ -38,11 +38,14 @@ exports.update = async (req, res, next) => {
         accepted: true,
         courseProgress: {
             currentUnit: nextUnit,
-            lessonId: nextLesson,
-            revisionId: nextUnitRevision || null
+            currentLesson: nextLesson,
+            currentRevision: nextUnitRevision || null
         },
         CourseRevisionProgress: nextRevision || null
     });
+
+    let unitExam = await examService.createStudentUnitExam({ studentId: student._id, unitId: nextUnit.unitId });
+    await examService.createStudentCourseExam({ studentId: student._id, courseId: student.currentCourse, unitsExams: [unitExam._id] });
 
     res.status(status.OK).json({
         success: true,

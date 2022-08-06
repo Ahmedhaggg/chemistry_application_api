@@ -122,6 +122,23 @@ module.exports = {
             alreadyAccepted: "can't accept this student because student is accpeted already",
             delete: "unaccepted student not found to delete"
         }
+    },
+    student: {
+        courseProgress: {
+            success: {
+                openNewUnit: "next unit is opened successfully",
+                openNewLesson: "next Lesson is opened successfully",
+                openNewUnitRevision: "next unit revision is opened successfully",
+                openNewCourseRevision: "next course revision is opend"
+            }
+        }
+    },
+    examDegree: {
+        success: {
+            saveUnitExamDegree: "your unit exam degree is saved successfully",
+            saveRevisionExamDegree: "your revision exam degree is saved successfully",
+            saveLessonExamDegree: "your lesson exam degree is saved successfully"
+        }
     }
 }
 

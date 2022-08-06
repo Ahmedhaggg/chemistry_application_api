@@ -1,5 +1,5 @@
 let { Student } = require("../../models");
-const { handleInsertErrors } = require("../../errors/databaseErrorHandler");
+const { handleInsertErrors, handleUpdateErrors } = require("../../errors/databaseErrorHandler");
 
 exports.createStudent = async studentData => {
     try {
@@ -23,13 +23,43 @@ exports.getStudentLoginData = async query => await Student
 
 exports.getStudentProfileData = async query => await Student.findOne(query);
 
-// exports.deleteStudent = async studentId => {
-//     let deletedStudent = await Student.deleteOne({ _id: studentId });
-//     console.log(deletedStudent);
+exports.updateCourseUnitProgress = async (query, newData) => {
+    let updateCourseProgress = await Student.updateOne(query, {
+        'courseProgress.currentUnit.unitId': newData.nextUnit.unitId,
+        'courseProgress.currentUnit.arrangement': newData.nextUnit.arrangement,
+        'courseProgress.currentLesson.lessonId': newData.nextLesson.lessonId,
+        'courseProgress.currentLesson.arrangement': newData.nextLesson.arrangement,
+        'courseProgress.currentRevision.revisionId': null,
+        'courseProgress.currentRevision.arrangement': null
+    })
 
-// }
+    return updateCourseProgress.modifiedCount === 1 ? true : handleUpdateErrors(updateCourseProgress);
+}
 
-// exports.getStudent = async studentId => {
-//     let student = await Student.findOne({ _id: studentId })
-//     return student;
-// }
+exports.updateUnitLessonProgress = async (query, nextLesson) => {
+    let updateCourseProgress = await Student.updateOne(query, {
+        'courseProgress.currentLesson.lessonId': nextLesson.lessonId,
+        'courseProgress.currentLesson.arrangement': nextLesson.arrangement,
+    });
+
+    return updateCourseProgress.modifiedCount === 1 ? true : handleUpdateErrors(updateCourseProgress);
+}
+
+
+exports.updateUnitRevisionProgress = async (query, nextRevision) => {
+    let updateCourseProgress = await Student.updateOne(query, {
+        'courseProgress.currentRevision.revisionId': nextRevision.lessonId,
+        'courseProgress.currentRevision.arrangement': nextRevision.arrangement,
+    });
+
+    return updateCourseProgress.modifiedCount === 1 ? true : handleUpdateErrors(updateCourseProgress);
+}
+
+exports.updateCourseRevisionProgress = async (query, courseRevisionProgress) => {
+    let updateCourseProgress = await Student.updateOne(query, { courseRevisionProgress });
+
+    return updateCourseProgress.modifiedCount === 1 ? true : handleUpdateErrors(updateCourseProgress);
+}
+
+exports.getStudentCourseProgress = async (query) => await Student.findOne(query)
+    .select("_id currentCourse courseProgress courseRevisionProgress")

@@ -1,40 +1,40 @@
-let revisionService = require("../../services/students/revision.student.service");
+let courseService = require("../../services/students/course.student.service")
+let revisionService = require("../../services/students/revision.student.service")
 let messages = require("../../helpers/messages");
 let status = require("../../errors/status");
 const APIError = require("../../errors/api.error");
 
+
 exports.index = async (req, res, next) => {
-    let { unitId } = req.params;
+    let { courseId } = req.params;
 
-    let unitRevisions = await revisionService.getUnitRevisons({ _id: unitId });
+    let revisions = await revisionService.getCourseRevisions({ _id: courseId });
 
-    if (!unitRevisions)
+    if (revision)
         throw new APIError(status.NOT_FOUND, {
-            success: false,
             message: messages.notFound,
-            unitRevisions
+            revisions: null
         });
 
     res.status(status.OK).json({
         success: true,
-        unitRevisions
+        revisions: revisions.revisions
     })
 }
 
 exports.show = async (req, res, next) => {
-    let { unitId, revisionId } = req.params;
+    let { revisionId, courseId } = req.params;
 
-    let unitRevision = await revisionService.getUnitRevision(unitId, revisionId);
+    let revision = await revisionService.getCourseRevision(courseId, revisionId);
 
-    if (!unitRevision)
+    if (revision)
         throw new APIError(status.NOT_FOUND, {
-            success: false,
             message: messages.notFound,
-            unitRevision
+            revision
         });
 
     res.status(status.OK).json({
         success: true,
-        unitRevision
+        revision
     })
 }

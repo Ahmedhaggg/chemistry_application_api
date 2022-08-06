@@ -18,6 +18,5 @@ exports.show = async (req, res, next) => {
     res.status(status.OK).json({
         success: true,
         unit
-    })
+    });
 }
-
