@@ -3,6 +3,7 @@ let APIError = require("../errors/api.error");
 let messages = require("../helpers/messages");
 let status = require("../errors/status");
 let jwt = require("../helpers/jwt")
+
 exports.isStudent = async (req, res, next) => {
     try {
         let token = req.headers['authorization'];
@@ -82,4 +83,10 @@ exports.isTeacher = async (req, res, next) => {
 
         next(newError);
     }
+}
+
+exports.isAdmin = async (req, res, next) => {
+    if (!req.session?.email)
+        return res.redirect("/admin/login")
+    next();
 }

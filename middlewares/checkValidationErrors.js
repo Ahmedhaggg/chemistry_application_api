@@ -9,7 +9,7 @@ module.exports = (req, res, next) => {
         return next();
 
     let errors = {};
-    let errorObject = result.forEach(error => { errors[error.param] = error.msg });
+    result.forEach(error => { errors[error.param] = error.msg });
 
     let newError = new APIError(status.CLIENT_ERROR, {
         success: false,

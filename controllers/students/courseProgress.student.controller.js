@@ -9,7 +9,7 @@ exports.updateCourseUnitProgress = async (req, res, next) => {
     let { id } = req.student;
     let { nextUnit, nextLesson } = req.body;
 
-    await studentSevrice.updateCourseUnitProgress({ _id: id }, { nextUnit, nextLesson });
+    await studentService.updateCourseUnitProgress({ _id: id }, { nextUnit, nextLesson });
 
     let newStudentUnitExams = await StudentUnitExamService.createStudentUnitExam({ studentId: id }, { nextUnit, nextLesson });
 
@@ -25,18 +25,19 @@ exports.updateUnitLessonProgress = async (req, res, next) => {
     let { id } = req.student;
     let { nextLesson } = req.body;
 
-    await studentSevrice.updateUnitLessonProgress({ _id: id }, nextLesson);
+    await studentService.updateUnitLessonProgress({ _id: id }, nextLesson);
 
     res.status(status.OK).json({
         success: true,
         message: messages.student.courseProgress.success.openNewLesson
     });
 }
+
 exports.updateUnitRevisionProgress = async (req, res, next) => {
     let { id } = req.student;
-    let { nextUnitRevision } = req.body;
+    let { nextRevision } = req.body;
 
-    await studentSevrice.updateUnitRevisionProgress({ _id: id }, nextUnitRevision);
+    await studentService.updateUnitRevisionProgress({ _id: id }, nextRevision);
 
     res.status(status.OK).json({
         success: true,
@@ -45,10 +46,10 @@ exports.updateUnitRevisionProgress = async (req, res, next) => {
 }
 
 exports.updateCourseRevisionProgress = async (req, res, next) => {
-    let { id } = req.user;
+    let { id } = req.student;
     let { nextRevision } = req.body;
 
-    await studentSevrice.updateCourseRevisionProgress({ _id: id }, nextRevision);
+    await studentService.updateCourseRevisionProgress({ _id: id }, nextRevision);
 
     res.status(status.OK).json({
         success: true,

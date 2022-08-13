@@ -18,8 +18,15 @@ exports.updateGrade = async (query, newGredeData) => {
     return updatedGrede.modifiedCount === 1 ? true : handleUpdateErrors(newGredeData);
 }
 
-exports.getGrade = async query => await Grade.findOne(query).populate("currentCourse");
+exports.getGrade = async query => await Grade.findOne(query).select("name numberOfStudents")
+    .populate({
+        path: "currentCourse",
+        select: "name"
+    })
 
-exports.getAllGrades = async () => await Grade.find();
+exports.getAllGrades = async () => await Grade.find().populate({
+    path: "currentCourse",
+    select: "name"
+});
 
 

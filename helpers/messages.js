@@ -131,6 +131,21 @@ module.exports = {
                 openNewUnitRevision: "next unit revision is opened successfully",
                 openNewCourseRevision: "next course revision is opend"
             }
+        },
+        lesson: {
+            faildOpen: {
+                notAvailable: 'You must pass the previous lessons first'
+            }
+        },
+        unitRevision: {
+            faildOpen: {
+                notAvailable: 'You must pass the previous lessons and revisions first'
+            }
+        },
+        courseRevision: {
+            faildOpen: {
+                notAvailable: 'You must pass the previous units and revisions first'
+            }
         }
     },
     examDegree: {

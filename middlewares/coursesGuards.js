@@ -61,7 +61,7 @@ exports.isAvailableLesson = async (req, res, next) => {
         next();
 
     } catch (error) {
-        console.log("catch")
+
         let newError = new APIError(status.INTERNAL_SERVER_ERROR, {
             success: false,
             errorName: "serverError",
@@ -70,4 +70,12 @@ exports.isAvailableLesson = async (req, res, next) => {
 
         next(newError);
     }
+}
+
+exports.isAvailableUnitRevision = async (req, res, next) => {
+
+}
+
+exports.isAvailableCourseRevisiom = async (req, res, next) => {
+
 }

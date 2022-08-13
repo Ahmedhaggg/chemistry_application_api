@@ -8,9 +8,9 @@ const APIError = require("../../errors/api.error");
 exports.index = async (req, res, next) => {
     let { courseId } = req.params;
 
-    let revisions = await revisionService.getCourseRevisions({ _id: courseId });
-
-    if (revision)
+    let revisions = await revisionService.getCourseRevisions(courseId);
+    console.log(revisions)
+    if (!revisions && revisions.revisions.length === 0)
         throw new APIError(status.NOT_FOUND, {
             message: messages.notFound,
             revisions: null
@@ -18,7 +18,7 @@ exports.index = async (req, res, next) => {
 
     res.status(status.OK).json({
         success: true,
-        revisions: revisions.revisions
+        revisions: revisions
     })
 }
 
@@ -27,7 +27,7 @@ exports.show = async (req, res, next) => {
 
     let revision = await revisionService.getCourseRevision(courseId, revisionId);
 
-    if (revision)
+    if (!revision)
         throw new APIError(status.NOT_FOUND, {
             message: messages.notFound,
             revision

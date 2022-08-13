@@ -4,7 +4,8 @@ let messages = require("../helpers/messages")
 let gradeSchema = new Schema({
     name: {
         type: String,
-        required: [true, messages.genrale.required]
+        required: [true, messages.genrale.required],
+        unique: true
     },
     currentCourse: {
         type: Types.ObjectId,
@@ -13,7 +14,7 @@ let gradeSchema = new Schema({
     },
     numberOfStudent: {
         type: Number,
-        required: false
+        default: 0
     }
 })
 

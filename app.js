@@ -1,15 +1,26 @@
 const express = require("express");
 const cors = require("cors");
-
-
+const exhbs = require("express-handlebars").engine;
+const path = require("path");
+const sessions = require('express-session');
 const messages = require("./helpers/messages")
-
+const flash = require('connect-flash');
 let app = express()
 
 // user parse md
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// use session
+
+//session middleware
+app.use(sessions({
+    secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
+    saveUninitialized: false,
+    cookie: { maxAge: 1000 * 60 * 60 * 24 * 7 },
+    resave: true
+}));
+app.use(flash())
 
 // use cors policy
 app.use(cors())
@@ -92,20 +103,37 @@ app.use("/teacher/units", unitRevisionTeacherRoutes)
 app.use("/teacher/courses", courseRevisionTeacherRoutes);
 app.use("/teacher/students", studentAcceptingTeacherRoutes)
 
+// admin panel
+app.engine('hbs', exhbs({ defaultLayout: 'main', extname: '.hbs', partialsDir: "views/layouts/partials" }));
+app.set('view engine', 'hbs');
+app.set('views', './views');
+app.use(express.static(path.join(__dirname, 'public')))
+
+
+// // import teacher routes
+// let authTeacherRoutes = require("./routes/admin/auth.teacher.router");
+// // teacher routes
+// app.use("/teacher", authTeacherRoutes)
+
+
+
 app.use((req, res, next) => {
-    console.log(req);
+    console.log(req.method)
+    console.log(req.body)
     res.status(404).json({
         success: false,
         message: "not found"
     })
-})
+});
 app.use((err, req, res, next) => {
-    console.log(err)
     res.status(err.httpStatusCode || 500).json({
         success: false,
         error: err.description || messages.serverError
     });
 })
+
+
+
 
 
 

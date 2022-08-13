@@ -48,7 +48,7 @@ exports.updateUnitLessonProgress = async (query, nextLesson) => {
 
 exports.updateUnitRevisionProgress = async (query, nextRevision) => {
     let updateCourseProgress = await Student.updateOne(query, {
-        'courseProgress.currentRevision.revisionId': nextRevision.lessonId,
+        'courseProgress.currentRevision.revisionId': nextRevision.revisionId,
         'courseProgress.currentRevision.arrangement': nextRevision.arrangement,
     });
 

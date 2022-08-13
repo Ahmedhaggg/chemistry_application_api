@@ -13,11 +13,11 @@ let courseSchema = new Schema({
     },
     numberOfUnits: {
         type: Number,
-        required: [true, messages.genrale.required]
+        default: 0
     },
     numberOfRevisions: {
         type: Number,
-        required: [true, messages.genrale.required]
+        default: 0
     },
     revisions: {
         type: [{ type: Types.ObjectId, ref: "Revision" }],

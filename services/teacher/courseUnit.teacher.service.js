@@ -6,8 +6,6 @@ exports.createUnit = async unitData => {
         let newUnit = new Unit();
         newUnit.name = unitData.name;
         newUnit.arrangement = unitData.arrangement;
-        newUnit.numberOfLessons = unitData.numberOfLessons;
-        newUnit.numberOfRevisions = unitData.numberOfRevisions;
         return await newUnit.save();
     } catch (error) {
         handleInsertErrors(error);

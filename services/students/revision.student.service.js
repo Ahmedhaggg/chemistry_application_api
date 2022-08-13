@@ -17,7 +17,10 @@ exports.getCourseRevisions = async courseId => await Course.findOne({ _id: cours
         select: "_id name arrangement"
     })
 
-exports.getCourseRevision = async (courseId, revisionId) => await Course.findOne({ _id: courseId }, { revisions: { $elemMatch: revisionId } }).populate("revisions");
+exports.getCourseRevision = async (courseId, revisionId) => {
+    let course = await Course.findOne({ _id: courseId }, { revisions: revisionId }).populate("revisions");
+    return course.revisions[0];
+}
 
 
 exports.getUnitRevision = async (unitId, revisionId) => await Course.findOne({ _id: unitId }, { revisions: { $elemMatch: revisionId } }).populate("revisions");

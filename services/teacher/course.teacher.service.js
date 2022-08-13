@@ -38,7 +38,7 @@ exports.getCourse = async query => await Course.findOne(query)
     });
 
 exports.addUnitToCourse = async (query, newUnitId) => {
-    let unitIsAdded = await Course.updateOne(query, { $push: { units: newUnitId } });
+    let unitIsAdded = await Course.updateOne(query, { $push: { units: newUnitId }, $inc: { numberOfUnits: 1 } });
     return unitIsAdded.modifiedCount === 1 ? true : handleUpdateErrors(unitIsAdded);
 }
 
@@ -64,7 +64,7 @@ exports.getCourseRevisions = async query => await Course.findOne(query)
 
 
 exports.addRevisionToCourse = async (query, newRevisionId) => {
-    let revisionIsAdded = await Course.updateOne(query, { $push: { revisions: newRevisionId } });
+    let revisionIsAdded = await Course.updateOne(query, { $push: { revisions: newRevisionId }, $inc: { numberOfRevisions: 1 } });
 
     return revisionIsAdded.modifiedCount === 1 ? true : handleUpdateErrors(revisionIsAdded);
 }
@@ -76,7 +76,8 @@ exports.deleteRevisionFromCourse = async (courseId, revisionId) => {
             _id: courseId
         },
         {
-            $pull: { revisions: { revisionId } }
+            $pull: { revisions: { revisionId } },
+            $inc: { numberOfRevisions: -1 }
         }
     );
 

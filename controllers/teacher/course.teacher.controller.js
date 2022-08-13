@@ -12,9 +12,9 @@ exports.index = async (req, res, next) => {
 }
 
 exports.store = async (req, res, next) => {
-    let { name, numberOfUnits, numberOfRevisions } = req.body;
+    let { name } = req.body;
 
-    let newCourse = await courseService.createCourse({ name, numberOfUnits, numberOfRevisions });
+    let newCourse = await courseService.createCourse({ name });
 
     res.status(status.OK).json({
         success: true,
@@ -42,9 +42,9 @@ exports.show = async (req, res, next) => {
 
 exports.update = async (req, res, next) => {
     let { courseId } = req.params;
-    let { name, numberOfUnits, numberOfRevisions } = req.body;
+    let { name } = req.body;
 
-    let updateCourse = await courseService.updateCourse({ _id: courseId }, { name, numberOfUnits, numberOfRevisions });
+    let updateCourse = await courseService.updateCourse({ _id: courseId }, { name });
 
     if (updateCourse === false)
         throw new APIError(status.INTERNAL_SERVER_ERROR, {

@@ -5,28 +5,28 @@ let catchErrors = require("../../middlewares/catchErrors");
 let guards = require("../../middlewares/guards");
 const checkValidationErrors = require("../../middlewares/checkValidationErrors");
 
-router.put("/courses/:courseId/units/:unitId",
+router.put("/units",
     guards.isStudent,
     courseProgressValidation.validate("updateUnitProgress"),
     checkValidationErrors,
     catchErrors(courseProgressController.updateCourseUnitProgress),
 );
 
-router.put("/units/:unitId/lessons/:lessonId",
+router.put("/lessons",
     guards.isStudent,
     courseProgressValidation.validate("updateLessonProgress"),
     checkValidationErrors,
     catchErrors(courseProgressController.updateUnitLessonProgress),
 );
 
-router.put("/units/:unitId/revisions/:revisionId",
+router.put("/units/revisions",
     guards.isStudent,
     courseProgressValidation.validate("updateUnitRevisionProgress"),
     checkValidationErrors,
     catchErrors(courseProgressController.updateUnitRevisionProgress),
 );
 
-router.put("/courses/:courseId/revisions/:revisionId",
+router.put("/revisions",
     guards.isStudent,
     courseProgressValidation.validate("updateCourseRevisionProgress"),
     checkValidationErrors,
