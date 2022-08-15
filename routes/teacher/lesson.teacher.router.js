@@ -5,6 +5,12 @@ let guards = require("../../middlewares/guards");
 let lessonTeacherValidation = require("../../validations/teacher/lesson.teacher.validation");
 let checkValidationErrors = require("../../middlewares/checkValidationErrors");
 
+
+router.get("/:unitId/lessons/next-arrangement",
+    guards.isTeacher,
+    catchErrors(lessonTeacherController.showNextLessontArrangement)
+);
+
 router.get("/:unitId/lessons/:lessonId",
     guards.isTeacher,
     catchErrors(lessonTeacherController.show)

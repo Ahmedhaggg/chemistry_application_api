@@ -1,5 +1,6 @@
 let { Course } = require("../../models");
-let { handleInsertErrors, handleUpdateErrors } = require("../../errors/databaseErrorHandler")
+let { handleInsertErrors, handleUpdateErrors } = require("../../errors/databaseErrorHandler");
+const { query } = require("express");
 
 exports.getAllCourses = async () => await Course.find().select("_id name");
 
@@ -7,8 +8,6 @@ exports.createCourse = async courseData => {
     try {
         let newCourse = new Course();
         newCourse.name = courseData.name;
-        newCourse.numberOfUnits = courseData.numberOfUnits
-        newCourse.numberOfRevisions = courseData.numberOfRevisions
         return await newCourse.save();
     } catch (error) {
         handleInsertErrors(error);
@@ -82,4 +81,34 @@ exports.deleteRevisionFromCourse = async (courseId, revisionId) => {
     );
 
     return revisionIsDeleted.modifiedCount === 1 ? true : handleUpdateErrors(revisionIsDeleted);
+}
+
+exports.getLastUnitArragement = async query => {
+    let course = await Course.findOne(query)
+        .select("_id")
+        .populate({
+            path: "units",
+            options: {
+                sort: { arrangement: -1 },
+                limit: 1
+            },
+            select: "arrangement"
+        })
+
+    return !course ? null : course.units[0]?.arrangement || 0;
+}
+
+exports.getLastRevisionArragement = async query => {
+    let course = await Course.findOne(query)
+        .select("_id")
+        .populate({
+            path: "revisions",
+            options: {
+                sort: { arrangement: -1 },
+                limit: 1
+            },
+            select: "arrangement"
+        })
+
+    return !course ? null : course.revisions[0]?.arrangement || 0;
 }

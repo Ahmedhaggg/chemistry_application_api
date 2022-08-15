@@ -93,3 +93,20 @@ exports.destroy = async (req, res, next) => {
         message: messages.revision.success.delete
     });
 }
+
+exports.showNextRevisionArrangement = async (req, res, next) => {
+    let { courseId } = req.params;
+
+    let lastRevisionInCourseArrangement = await courseService.getLastRevisionArragement({ _id: courseId });
+
+    if (!lastRevisionInCourseArrangement)
+        throw new APIError(status.NOT_FOUND, {
+            errorName: "notFoundError",
+            message: messages.notFound
+        });
+
+    res.status(status.OK).json({
+        success: true,
+        nextRevisionArrangement: lastRevisionInCourseArrangement + 1
+    })
+}

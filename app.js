@@ -103,6 +103,18 @@ app.use("/teacher/units", unitRevisionTeacherRoutes)
 app.use("/teacher/courses", courseRevisionTeacherRoutes);
 app.use("/teacher/students", studentAcceptingTeacherRoutes)
 
+let students = []
+app.get("/teacher/api", (req, res, next) => res.status(200).json({ apis: ["student", "users"] }))
+app.get("/teacher/api/students", (req, res, next) => res.status(200).json({ students }))
+app.post("/teacher/api/students", (req, res, next) => {
+    students.push(req.body);
+    res.status(200).json({
+        success: true,
+        message: "created success"
+    })
+})
+
+
 // admin panel
 app.engine('hbs', exhbs({ defaultLayout: 'main', extname: '.hbs', partialsDir: "views/layouts/partials" }));
 app.set('view engine', 'hbs');
@@ -126,6 +138,7 @@ app.use((req, res, next) => {
     })
 });
 app.use((err, req, res, next) => {
+    console.log(err)
     res.status(err.httpStatusCode || 500).json({
         success: false,
         error: err.description || messages.serverError

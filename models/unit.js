@@ -3,19 +3,9 @@ let messages = require("../helpers/messages");
 
 let UnitSchema = new Schema({
     name: {
-        type: String,
-        required: [true, messages.genrale.required],
-        unique: true
+        type: String
     },
     arrangement: {
-        type: Number,
-        required: [true, messages.genrale.required]
-    },
-    numberOfLessons: {
-        type: Number,
-        required: [true, messages.genrale.required]
-    },
-    numberOfRevisions: {
         type: Number,
         required: [true, messages.genrale.required]
     },
@@ -45,6 +35,18 @@ let UnitSchema = new Schema({
         type: [{ type: Types.ObjectId, ref: "Revision" }],
         default: []
     }
+}, {
+    id: false,
+    toObject: { virtuals: true },
+    toJSON: { virtuals: true }
+});
+
+UnitSchema.virtual('numberOfLessons').get(function () {
+    return this.lessons?.length
+});
+
+UnitSchema.virtual('numberOfRevisions').get(function () {
+    return this.revisions?.length
 });
 
 let Unit = model("Unit", UnitSchema);

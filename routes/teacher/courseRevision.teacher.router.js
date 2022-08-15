@@ -17,6 +17,11 @@ router.post("/:courseId/revisions",
     catchErrors(courseRevisionTeacherController.store)
 );
 
+router.get("/:courseId/revisions/next-arrangement",
+    guards.isTeacher,
+    catchErrors(courseRevisionTeacherController.showNextRevisionArrangement)
+)
+
 router.get("/:courseId/revisions/:revisionId",
     guards.isTeacher,
     catchErrors(courseRevisionTeacherController.show)

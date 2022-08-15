@@ -17,6 +17,11 @@ router.post("/:courseId/units",
     catchErrors(courseUnitTeacherController.store)
 );
 
+router.get("/:courseId/units/next-arrangement",
+    guards.isTeacher,
+    catchErrors(courseUnitTeacherController.showNextUnitArrangement)
+);
+
 router.get("/:courseId/units/:unitId",
     guards.isTeacher,
     catchErrors(courseUnitTeacherController.show)
@@ -28,6 +33,5 @@ router.put("/:courseId/units/:unitId",
     checkValidationErrors,
     catchErrors(courseUnitTeacherController.update)
 );
-
 
 module.exports = router;

@@ -3,7 +3,6 @@ let APIError = require("./api.error");
 let messages = require("../helpers/messages");
 
 exports.handleInsertErrors = error => {
-
     if (error.name === "ValidationError") {
         let errors = {};
 

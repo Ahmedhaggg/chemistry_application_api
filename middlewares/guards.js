@@ -74,7 +74,7 @@ exports.isTeacher = async (req, res, next) => {
         next(error);
 
     } catch (error) {
-
+        console.log(error)
         let newError = new APIError(status.INTERNAL_SERVER_ERROR, {
             success: false,
             errorName: "serverError",

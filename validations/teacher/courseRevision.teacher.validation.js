@@ -16,7 +16,6 @@ module.exports = {
                     check("exam.questions[*]question").not().isEmpty().withMessage(messages.genrale.required),
                     check("exam.questions[*]answers").not().isEmpty().withMessage(messages.genrale.required),
                     check("exam.questions[*]correctAnswer").not().isEmpty().withMessage(messages.genrale.required)
-
                 ];
             case "update":
                 return [

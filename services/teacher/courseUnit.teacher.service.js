@@ -21,7 +21,7 @@ exports.getUnit = async query => await Unit.findOne(query)
     .populate({
         path: "lessons",
         options: {
-            sort: { 'arrangement': 1 }
+            sort: { 'arrangement': 1 },
         },
         select: "_id name arrangement"
     })
@@ -74,4 +74,19 @@ exports.deleteRevisionFromUnit = async (unitId, revisionId) => {
     );
 
     return revisionIsDeleted.modifiedCount === 1 ? true : handleUpdateErrors(revisionIsDeleted);
+}
+
+exports.getLastLessonArragement = async query => {
+    let unit = await Unit.findOne(query)
+        .select("_id")
+        .populate({
+            path: "lessons",
+            options: {
+                sort: { arrangement: -1 },
+                limit: 1
+            },
+            select: "arrangement"
+        })
+
+    return !unit ? null : unit.lessons[0]?.arrangement || 0;
 }

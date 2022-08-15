@@ -18,9 +18,9 @@ exports.index = async (req, res, next) => {
 
 exports.store = async (req, res, next) => {
     let { courseId } = req.params;
-    let { name, arrangement, numberOfLessons, numberOfRevisions } = req.body;
+    let { name, arrangement } = req.body;
 
-    let newUnit = await unitService.createUnit({ name, arrangement, numberOfLessons, numberOfRevisions });
+    let newUnit = await unitService.createUnit({ name, arrangement });
 
     await courseService.addUnitToCourse({ _id: courseId }, newUnit._id);
 
@@ -50,12 +50,28 @@ exports.show = async (req, res, next) => {
 
 exports.update = async (req, res, next) => {
     let { unitId } = req.params;
-    let { name, numberOfLessons, numberOfRevisions } = req.body;
+    let { name } = req.body;
 
-    await unitService.updateUnit({ _id: unitId }, { name, numberOfLessons, numberOfRevisions });
+    await unitService.updateUnit({ _id: unitId }, { name });
 
     res.status(status.OK).json({
         success: true,
         message: messages.unit.success.update
     });
+}
+
+exports.showNextUnitArrangement = async (req, res, next) => {
+    let { courseId } = req.params;
+    let lastUnitInCourseArrangement = await courseService.getLastUnitArragement({ _id: courseId });
+
+    if (lastUnitInCourseArrangement == null)
+        throw new APIError(status.NOT_FOUND, {
+            errorName: "notFoundError",
+            message: messages.notFound
+        });
+
+    res.status(status.OK).json({
+        success: true,
+        nextUnitArrangement: lastUnitInCourseArrangement + 1
+    })
 }

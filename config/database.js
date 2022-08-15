@@ -1,9 +1,9 @@
 let mongoose = require("mongoose");
-
+let courseService = require("../services/teacher/course.teacher.service")
 mongoose
     .connect("mongodb+srv://AhmedHaggag:AhmedHaggagRady@cluster0.u5klm.mongodb.net/chemistryApplication?retryWrites=true&w=majority")
-    .then(() => {
-        console.log("mongoose is connecting")
+    .then(async () => {
+        console.log("mongoose connect")
     })
     .catch((err) => {
         console.log(
