@@ -40,4 +40,13 @@ let revisionSchema = new Schema({
 
 let Revision = model("Revision", revisionSchema);
 
+
+/**
+ * 
+ *     arrangementInCourse: {
+        type: Number,
+        required: [true, messages.genrale.required]
+    },
+ */
+
 module.exports = Revision;

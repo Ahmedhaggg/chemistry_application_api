@@ -8,12 +8,12 @@ let status = require("../../errors/status");
 exports.updateCourseUnitProgress = async (req, res, next) => {
     let { id } = req.student;
     let { nextUnit, nextLesson } = req.body;
-
+    
     await studentService.updateCourseUnitProgress({ _id: id }, { nextUnit, nextLesson });
 
-    let newStudentUnitExams = await StudentUnitExamService.createStudentUnitExam({ studentId: id }, { nextUnit, nextLesson });
+    let newStudentUnitExams = await StudentUnitExamService.createStudentUnitExam({ studentId: id, unitId: nextUnit.unitId });
 
-    await studentCourseExamService.addStudentUnitExamToCourseStudentExam({ studentId }, newStudentUnitExams._id)
+    await studentCourseExamService.addStudentUnitExamToCourseStudentExam({ studentId: id }, newStudentUnitExams._id)
 
     res.status(status.OK).json({
         success: true,

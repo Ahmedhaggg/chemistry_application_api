@@ -29,10 +29,9 @@ exports.updateCourseUnitProgress = async (query, newData) => {
         'courseProgress.currentUnit.arrangement': newData.nextUnit.arrangement,
         'courseProgress.currentLesson.lessonId': newData.nextLesson.lessonId,
         'courseProgress.currentLesson.arrangement': newData.nextLesson.arrangement,
-        'courseProgress.currentRevision.revisionId': null,
-        'courseProgress.currentRevision.arrangement': null
+        'courseProgress.currentUnitRevision': null    
     })
-
+    console.log(updateCourseProgress)
     return updateCourseProgress.modifiedCount === 1 ? true : handleUpdateErrors(updateCourseProgress);
 }
 
@@ -47,11 +46,10 @@ exports.updateUnitLessonProgress = async (query, nextLesson) => {
 
 
 exports.updateUnitRevisionProgress = async (query, nextRevision) => {
+    console.log(nextRevision)
     let updateCourseProgress = await Student.updateOne(query, {
-        'courseProgress.currentRevision.revisionId': nextRevision.revisionId,
-        'courseProgress.currentRevision.arrangement': nextRevision.arrangement,
+        'courseProgress.currentUnitRevision': nextRevision,
     });
-
     return updateCourseProgress.modifiedCount === 1 ? true : handleUpdateErrors(updateCourseProgress);
 }
 
@@ -61,5 +59,45 @@ exports.updateCourseRevisionProgress = async (query, courseRevisionProgress) => 
     return updateCourseProgress.modifiedCount === 1 ? true : handleUpdateErrors(updateCourseProgress);
 }
 
-exports.getStudentCourseProgress = async (query) => await Student.findOne(query)
-    .select("_id currentCourse courseProgress courseRevisionProgress")
+
+exports.completeStudentCourse = async (studentId) => {
+    let updateCourseProgress = await Student.updateOne({ _id: studentId }, { 
+        'courseProgress.courseIsCompleted': true
+    });
+
+    return updateCourseProgress.modifiedCount === 1 ? true : handleUpdateErrors(updateCourseProgress);
+}
+
+exports.updateProgressArrangement = async (studentId, progressArrangement) => {
+    let updateCourseProgress = await Student.updateOne({ _id: studentId }, { 
+        'courseProgress.sectionArrangement': progressArrangement
+    });
+
+    return updateCourseProgress.modifiedCount === 1 ? true : handleUpdateErrors(updateCourseProgress);
+}
+// exports.getStudentCourseProgress = async (query) => await Student.findOne(query)
+    // .select("_id currentCourse courseProgress courseRevisionProgress")
+
+
+
+// {
+//     "nextUnit": {
+//         "unitId": "62f912687bc8fa64f4c99dcc",
+//         "arrangement": 4
+//     },
+//     "nextLesson": {
+//         "lessonId": "62f913037bc8fa64f4c99dd3",
+//         "arrangement": 1
+//     }
+// }
+
+// {
+    // "nextUnit": {
+    //     "unitId": "{{unitId}}",
+    //     "arrangement": 1
+    // },
+    // "nextLesson": {
+    //     "lessonId": "{{lessonId}}",
+    //     "arrangement": 1
+    // }
+// }

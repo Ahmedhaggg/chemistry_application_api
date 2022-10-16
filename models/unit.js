@@ -35,7 +35,7 @@ let UnitSchema = new Schema({
         type: [{ type: Types.ObjectId, ref: "Revision" }],
         default: []
     }
-}, {
+}, {  
     id: false,
     toObject: { virtuals: true },
     toJSON: { virtuals: true }
@@ -51,6 +51,13 @@ UnitSchema.virtual('numberOfRevisions').get(function () {
 
 let Unit = model("Unit", UnitSchema);
 
+
+/**
+ *     arrangementInCourse: {
+        type: Number,
+        required: [true, messages.genrale.required]
+    },
+ */
 module.exports = Unit;
 
 

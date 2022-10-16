@@ -35,9 +35,63 @@ const studentSchema = new Schema({
         type: Boolean,
         default: false
     },
+    courseProgress: {
+        _id: false,
+        type: {
+            currentUnit: {
+                unitId: { type: Types.ObjectId, ref: "Unit" },
+                arrangement: Number
+            },
+            currentLesson: {
+                lessonId: { type: Types.ObjectId, ref: "Lesson" },
+                arrangement: Number
+            },
+            currentUnitRevision: {
+                revisionId: { type: Types.ObjectId, ref: "Revision" },
+                arrangement: Number
+            }
+        },
+        required: false
+    },
+    courseRevisionProgress: {
+        type: {
+            revisionId: Types.ObjectId,
+            arrangement: Number
+        },
+        required: false
+    },
     currentCourse: { type: Types.ObjectId, ref: "Course", required: [true, messages.genrale.required] },
     grade: { type: Types.ObjectId, ref: "Grade", required: [true, messages.genrale.required] },
-    courseProgress: {
+    lastLogin: {
+        type: Date,
+        required: false
+    }
+}, { timestamps: false });
+
+studentSchema.pre("save", async function (next) {
+    this.password = await hash(this.password);
+    next();
+});
+
+const Student = model("Student", studentSchema);
+
+module.exports = Student;
+
+
+/**
+ * 
+ * courseProgress: {
+        type: {
+            sectionArrangement: Number,
+            courseIsCompleted: {
+                type: Boolean,
+                default: false
+            }
+        },
+        default: {}
+    },
+
+ * courseProgress: {
         _id: false,
         type: {
             currentUnit: {
@@ -62,20 +116,10 @@ const studentSchema = new Schema({
         },
         required: false
     },
-    lastLogin: {
-        type: Date,
-        required: false
-    }
-}, { timestamps: false });
+ */
 
-studentSchema.pre("save", async function (next) {
-    this.password = await hash(this.password);
-    next();
-});
 
-const Student = model("Student", studentSchema);
 
-module.exports = Student;
 
 // const mongoose = require('mongoose');
 

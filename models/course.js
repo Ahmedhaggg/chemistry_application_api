@@ -23,7 +23,16 @@ let courseSchema = new Schema({
         type: [{ type: Types.ObjectId, ref: "Revision" }],
         default: []
     }
-})
+});
+
+
+/*
+
+lastSectionArrangement: {
+        type: Number,
+        default: 0
+    }
+*/
 
 let Course = model("Course", courseSchema);
 

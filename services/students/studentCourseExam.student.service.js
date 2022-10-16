@@ -26,34 +26,37 @@ exports.createStudentCourseExam = async newData => {
 
 
 exports.addStudentUnitExamToCourseStudentExam = async (query, studentUnitExamId) => {
-    let addUnitExam = await StudentCourseExam.updateOne(query, { $push: { unitsExams: studentUnitExamId } });
+    let addUnitExam = await StudentCourseExam.updateOne(query, { $push: { units: studentUnitExamId } });
 
     return addUnitExam.modifiedCount === 1 ? true : handleUpdateErrors(addUnitExam);
 }
 
 exports.addStudentRevisionExamToCourseStudentExam = async (query, revisionDegree) => {
-    let addRevisionDegree = await StudentCourseExam.updateOne(query, { $push: { revisions: revisionDegree } });
+    let addRevisionDegree = await StudentCourseExam.updateOne(query, { $push: { revisions: {
+        revision: revisionDegree.revisionId,
+        degree: revisionDegree.degree
+    } } });
 
     return addRevisionDegree.modifiedCount === 1 ? true : handleUpdateErrors(addRevisionDegree);
 }
 
 exports.getAllUnitsExamsDegrees = async query => await StudentCourseExam.findOne(query)
-    .select("_id")
+    .select("_id units")
     .populate({
-        path: "unitsExams",
+        path: "units",
         select: "degree",
         populate: {
-            path: "unitId",
+            path: "unit",
             select: "_id name arrangement"
         }
     })
 
-exports.getAllRevisionsExamsDegrees = async query => await StudentCourseExam.findOne(query)
+exports.getAllRevisionsExamsDegrees = async query => await ( await StudentCourseExam.findOne(query)
     .select("_id revisions")
     .populate({
-        path: "revisions.revisionId",
+        path: "revisions.revision",
         select: "_id arrangement name"
-    });
+    })).revisions;
 
-exports.getCourseRevisionExamDegree = async (query, revisionId) => await StudentCourseExam
-    .findOne(query, { revisions: { $elemMatch: { revisionId } } });
+exports.getCourseRevisionExamDegree = async (query, revisionId) => await (await StudentCourseExam
+    .findOne(query, { revisions: { $elemMatch: { revision: revisionId } } }).select("revisions")).revisions[0]?.degree || null;

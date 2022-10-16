@@ -7,13 +7,13 @@ let courseExamsDegreeService = require("../../services/students/studentCourseExa
 
 exports.store = async (req, res, next) => {
     let { unitId, degree } = req.body;
-    let studentId = req.student.studentId;
+    let studentId = req.student.id;
 
     await unitExamDegreeService.saveUnitDegree({ unitId, studentId }, degree);
-
+    
     res.status(status.OK).json({
         success: true,
-        message: messages.examDegree.success.saveUnitDegree
+        message: messages.examDegree.success.saveUnitExamDegree
     });
 }
 
@@ -49,6 +49,5 @@ exports.show = async (req, res, next) => {
     res.status(status.OK).json({
         success: true,
         UnitExamDegree
-    })
-
+    });
 }

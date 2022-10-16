@@ -3,6 +3,7 @@ const status = require("../errors/status");
 const messages = require("../helpers/messages");
 let studentService = require("../services/students/index.student.service");
 let unitService = require("../services/students/courseUnit.student.service");
+let revisionService = require("../services/students/revision.student.service");
 
 exports.isStudentCourse = async (req, res, next) => {
     try {
@@ -39,7 +40,7 @@ exports.isAvailableLesson = async (req, res, next) => {
 
         let student = await studentService.getStudentCourseProgress({ _id: studentId });
 
-        if (student.courseProgress.currentUnit.lessonId === lessonId)
+        if (student.courseProgress.currentLesson.lessonId === lessonId)
             return next();
 
         let unitAndLesson = await unitService.getUnitAndLesson(unitId, lessonId);
@@ -72,10 +73,41 @@ exports.isAvailableLesson = async (req, res, next) => {
     }
 }
 
+exports.isAvailableCourseUnit = async (req, res, next) => {
+    let studentId = req.student.id;
+    let { unitId } = req.params;
+
+    let student = await studentService.getStudentCourseProgress({ _id: studentId });
+
+    if (student.courseProgress.currentUnit.unitId === unitId)
+        return next();
+    
+
+}
 exports.isAvailableUnitRevision = async (req, res, next) => {
+    let studentId = req.student.id;
+    let { unitId, revisionId } = req.params;
+
+    let student = await studentService.getStudentCourseProgress({ _id: studentId });
+
+    if (student.courseProgress.currentUnitRevision.revisionId ===  revisionId);
+        return next();
+
+    
+    // check is revision is passed
+    let unitRevision = await revisionService.getUnitRevision(unitId, revisionId);
+
+    
+    
+}
+
+exports.isAvailableCourseRevision = async (req, res, next) => {
+    // check if revision is next  
+    let studentId = req.student.id;
+    let { unitId } = req.params;
+
+    let student = await studentService.getStudentCourseProgress({ _id: studentId });
+
 
 }
 
-exports.isAvailableCourseRevisiom = async (req, res, next) => {
-
-}

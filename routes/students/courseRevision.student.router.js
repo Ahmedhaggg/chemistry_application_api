@@ -6,7 +6,7 @@ let courseGuards = require("../../middlewares/coursesGuards");
 
 router.get("/:courseId/revisions",
     guards.isStudent,
-    courseGuards.isStudentCourse, // to prevent user from entering another course
+    courseGuards.isStudentCourse,
     catchErrors(courseRevisionStudentController.index)
 );
 

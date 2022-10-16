@@ -7,7 +7,8 @@ let courseExamsDegreeService = require("../../services/students/studentCourseExa
 exports.store = async (req, res, next) => {
     let { degree, revisionId } = req.body;
     let studentId = req.student.id;
-    await courseExamsDegreeService.saveCourseRevisionExamDegree({ studentId }, { revisionId, degree });
+    
+    await courseExamsDegreeService.addStudentRevisionExamToCourseStudentExam({ studentId }, { revisionId, degree });
 
     res.status(status.OK).json({
         success: true,
@@ -15,10 +16,10 @@ exports.store = async (req, res, next) => {
     });
 }
 
-exports.index = (req, res, next) => {
+exports.index = async (req, res, next) => {
     let studentId = req.student.id;
 
-    let courseRevisionsExamsDegrees = courseExamsDegreeService.getAllRevisionsExamsDegrees({ studentId });
+    let courseRevisionsExamsDegrees = await courseExamsDegreeService.getAllRevisionsExamsDegrees({ studentId });
 
     if (!courseRevisionsExamsDegrees)
         throw new APIError(status.NOT_FOUND, {
@@ -37,7 +38,7 @@ exports.show = async (req, res, next) => {
     let { id } = req.student;
 
     let revisionDegree = await courseExamsDegreeService.getCourseRevisionExamDegree({ studentId: id }, revisionId);
-
+    
     if (!revisionDegree)
         throw new APIError(status.NOT_FOUND, {
             message: messages.notFound,

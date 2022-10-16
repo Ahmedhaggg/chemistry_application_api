@@ -7,6 +7,7 @@ let jwt = require("../helpers/jwt")
 exports.isStudent = async (req, res, next) => {
     try {
         let token = req.headers['authorization'];
+        
         if (!token) {
 
             let newError = new APIError(status.UNAUTHORIZED, {
@@ -35,7 +36,7 @@ exports.isStudent = async (req, res, next) => {
         };
 
         next();
-    } catch (e) {
+    } catch (_) {
         let newError = new APIError(status.INTERNAL_SERVER_ERROR, {
             success: false,
             errorName: "serverError",

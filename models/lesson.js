@@ -1,5 +1,6 @@
 let { Schema, model } = require("mongoose");
 let messages = require("../helpers/messages");
+const Course = require("./course");
 
 let lessonSchema = new Schema({
     name: {
@@ -37,7 +38,13 @@ let lessonSchema = new Schema({
         required: [true, messages.genrale.required]
     }
 });
-
+/**
+ * 
+ * arrangementInCourse: {
+        type: Number,
+        required: [true, messages.genrale.required]
+    },
+ */
 let Lesson = model("Lesson", lessonSchema);
 
 module.exports = Lesson;

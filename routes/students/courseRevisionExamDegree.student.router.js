@@ -15,7 +15,7 @@ router.get("/:courseId/revisions/:revisionId",
     catchErrors(courseRevisionExamDegreeStudentController.show)
 );
 
-router.post("/:courseId/revisions/:revisionId",
+router.post("/:courseId/revisions",
     guards.isStudent,
     courseRevisionExamDegreeStudentValidation.validate("create"),
     checkValidationErrors,

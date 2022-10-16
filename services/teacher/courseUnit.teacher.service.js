@@ -90,3 +90,18 @@ exports.getLastLessonArragement = async query => {
 
     return !unit ? null : unit.lessons[0]?.arrangement || 0;
 }
+
+exports.getLastRevisionArragement = async query => {
+    let unit = await Unit.findOne(query)
+        .select("_id")
+        .populate({
+            path: "revisions",
+            options: {
+                sort: { arrangement: -1 },
+                limit: 1
+            },
+            select: "arrangement"
+        })
+
+    return !unit ? null : unit.revisions[0]?.arrangement || 0;
+}

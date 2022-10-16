@@ -23,7 +23,7 @@ exports.index = async (req, res, next) => {
 
 exports.show = async (req, res, next) => {
     let { unitId, revisionId } = req.params;
-
+    
     let unitRevision = await revisionService.getUnitRevision(unitId, revisionId);
 
     if (!unitRevision)

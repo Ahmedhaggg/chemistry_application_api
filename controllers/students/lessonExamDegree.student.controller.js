@@ -5,8 +5,8 @@ let unitExamsDegreeService = require("../../services/students/studentUnitExam.st
 
 exports.index = async (req, res, next) => {
     let { unitId } = req.params;
-    let studentId = req.student.studentId;
-
+    let studentId = req.student.id;
+    
     let unitLessonsDegrees = await unitExamsDegreeService.getUnitLessonsDegrees({ studentId, unitId });
 
     if (!unitLessonsDegrees)
@@ -23,13 +23,13 @@ exports.index = async (req, res, next) => {
 }
 
 exports.store = async (req, res, next) => {
-    let { unitId, lessonId } = req.params;
-    let { degree } = req.body;
+    let { unitId } = req.params;
+    let { degree, lessonId } = req.body;
     let studentId = req.student.id;
 
     await unitExamsDegreeService.addLessonDegree({ unitId, studentId }, { lessonId, degree });
 
-    res.status(status.Ok).json({
+    res.status(status.OK).json({
         success: true,
         message: messages.examDegree.success.saveLessonExamDegree
     });

@@ -12,15 +12,16 @@ let StudentCourseExamSchema = new Schema({
         ref: "Course",
         required: [true, messages.genrale.required]
     },
-    unitsExams: {
+    units: {
         type: [{ type: Types.ObjectId, ref: "StudentUnitExam" }],
         default: []
     },
-    RevisionExam: {
+    revisions: {
         type: [
             {
-                revisionId: [{ type: Types.ObjectId, ref: "Revision" }],
-                degree: Number
+                revision: { type: Types.ObjectId, ref: "Revision" },
+                degree: Number,
+                _id: false
             }
         ],
         default: []

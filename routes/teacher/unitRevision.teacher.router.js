@@ -5,6 +5,11 @@ let guards = require("../../middlewares/guards");
 let unitRevisionTeacherValidation = require("../../validations/teacher/unitRevision.teacher.validation");
 let checkValidationErrors = require("../../middlewares/checkValidationErrors");
 
+router.get("/:unitId/revisions/next-arrangement",
+    guards.isTeacher,
+    catchErrors(unitRevisionTeacherController.showNextUnitRevisionArrangement)
+);
+
 router.get("/:unitId/revisions",
     guards.isTeacher,
     catchErrors(unitRevisionTeacherController.index)

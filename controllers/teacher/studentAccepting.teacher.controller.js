@@ -2,7 +2,8 @@ const APIError = require("../../errors/api.error");
 let status = require("../../errors/status");
 let messages = require("../../helpers/messages");
 let studentService = require("../../services/teacher/student.teacher.service");
-let examService = require("../../services/teacher/studentExam.teacher.service")
+let examService = require("../../services/teacher/studentExam.teacher.service");
+
 exports.index = async (req, res, next) => {
     let { limit, offset } = req.query;
     let unAcceptedStudents = await studentService.getAllUnAcceptedStudent({ limit, offset });

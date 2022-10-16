@@ -2,7 +2,7 @@ let { Schema, Types, model } = require("mongoose")
 let messages = require("../helpers/messages");
 
 let studentExamSchema = new Schema({
-    unitId: {
+    unit: {
         type: Types.ObjectId,
         ref: "Unit",
         required: [true, messages.genrale.required]
@@ -14,12 +14,12 @@ let studentExamSchema = new Schema({
     },
     degree: {
         type: Number,
-        required: false
+        default: null
     },
     lessons: {
         type: [
             {
-                lessonId: {
+                lesson: {
                     type: Types.ObjectId,
                     ref: "Lesson"
                 },
@@ -32,7 +32,7 @@ let studentExamSchema = new Schema({
     revisions: {
         type: [
             {
-                revisionId: {
+                revision: {
                     type: Types.ObjectId,
                     ref: "Revision"
                 },
@@ -44,6 +44,9 @@ let studentExamSchema = new Schema({
     }
 })
 
+
+
 let StudentUnitExam = model("StudentUnitExam", studentExamSchema);
+
 
 module.exports = StudentUnitExam;

@@ -8,7 +8,7 @@ module.exports = {
                 return [
                     check("degree").notEmpty().withMessage(messages.genrale.required)
                         .isInt().withMessage(messages.genrale.isNumber),
-                    check("revisionId").notEmpty().withMessage(messages.genrale.required)
+                    check("unitId").notEmpty().withMessage(messages.genrale.required)
                 ]
         }
     }
