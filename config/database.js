@@ -1,7 +1,7 @@
 let mongoose = require("mongoose");
-let courseService = require("../services/teacher/course.teacher.service")
+let { DB_URL_CON } = require("../config/index")
 mongoose
-    .connect("mongodb+srv://AhmedHaggag:AhmedHaggagRady@cluster0.u5klm.mongodb.net/chemistryApplication?retryWrites=true&w=majority")
+    .connect(DB_URL_CON)
     .then(async () => {
         console.log("mongoose connect")
     })
