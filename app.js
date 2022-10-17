@@ -29,7 +29,6 @@ let unitExamDegreeStudentRoutes = require("./routes/students/unitExamDegree.stud
 let lessonExamDegreeStudentRoutes = require("./routes/students/lessonExamDegree.student.router");
 let unitRevisionExamDegreeStudentroutes = require("./routes/students/unitRevisionExamDegree.student.router");
 
-
 app.use("/students/auth", authStudentRoutes);
 app.use("/students/grades", gradeStudentRoutes);
 app.use("/students/courses", courseStudentRoutes);
@@ -45,7 +44,6 @@ app.use("/students/exams-degrees/courses", courseRevisionExamDegreeStudentRoutes
 app.use("/students/exams-degrees/courses", unitExamDegreeStudentRoutes);
 app.use("/students/exams-degrees/units", lessonExamDegreeStudentRoutes);
 app.use("/students/exams-degrees/units", unitRevisionExamDegreeStudentroutes);
-
 
 // teacher routes
 let authTeacherRoutes = require("./routes/teacher/auth.teacher.router");

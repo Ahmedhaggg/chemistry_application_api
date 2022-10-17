@@ -5,6 +5,7 @@ let catchErrors = require("../../middlewares/catchErrors");
 let guards = require("../../middlewares/guards");
 const checkValidationErrors = require("../../middlewares/checkValidationErrors");
 
+
 router.put("/units",
     guards.isStudent,
     courseProgressValidation.validate("updateUnitProgress"),
