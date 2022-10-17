@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
-const messages = require("./helpers/messages")
+const messages = require("./helpers/messages");
+let { PORT } = require("./config")
 let app = express()
 
 // user parse md
@@ -86,4 +87,4 @@ app.use((err, req, res, next) => {
     });
 })
 
-app.listen(5000, () => console.log("server is running"))
+app.listen(PORT, () => console.log("server is running"))
