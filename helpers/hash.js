@@ -1,8 +1,6 @@
-let bcrypt = require("bcrypt");
+let bcrypt = require("bcryptjs");
 let { BCRYPT_SALT } = require("../config");
 exports.hash = async data => {
-    console.log("dtatat", data);
-    console.log("ddd", BCRYPT_SALT)
     const salt = await bcrypt.genSalt(JSON.parse(BCRYPT_SALT));
 
     let hash = await bcrypt.hash(data, salt);
