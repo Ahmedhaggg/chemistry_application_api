@@ -11,6 +11,7 @@ exports.count = async (req, res, next) => {
         numberOfStudents
     })
 }
+
 exports.index = async (req, res, next) => {
     let {
         limit,

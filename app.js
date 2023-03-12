@@ -57,7 +57,7 @@ let unitRevisionTeacherRoutes = require("./routes/teacher/unitRevision.teacher.r
 let courseRevisionTeacherRoutes = require("./routes/teacher/courseRevision.teacher.router");
 let studentAcceptingTeacherRoutes = require("./routes/teacher/studentAccepting.teacher.router");
 let studentTeacherRoutes = require("./routes/teacher/students.teacher.router");
-
+let studentDegreeTeacherRoutes = require("./routes/teacher/studentExamDegree.teacher.router");
 
 app.use("/teacher/auth", authTeacherRoutes);
 app.use("/teacher/courses", courseTeacherRoutes);
@@ -69,10 +69,9 @@ app.use("/teacher/units", unitRevisionTeacherRoutes);
 app.use("/teacher/courses", courseRevisionTeacherRoutes);
 app.use("/teacher/students", studentAcceptingTeacherRoutes);
 app.use("/teacher/students", studentTeacherRoutes);
+app.use("/teacher/students", studentDegreeTeacherRoutes);
 
 app.use((req, res, next) => {
-    console.log(req.method)
-    console.log(req.body)
     res.status(404).json({
         success: false,
         message: "not found"

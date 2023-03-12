@@ -18,9 +18,10 @@ exports.index = async (req, res, next) => {
 
 exports.store = async (req, res, next) => {
     let { courseId } = req.params;
-    let { name, arrangement } = req.body;
-
-    let newUnit = await unitService.createUnit({ name, arrangement });
+    let { name } = req.body;
+    let numberOfUnitsInCourse =  await courseService.countCourseUnits(courseId)
+    
+    let newUnit = await unitService.createUnit({ name, arrangement: numberOfUnitsInCourse + 1 });
 
     await courseService.addUnitToCourse({ _id: courseId }, newUnit._id);
 

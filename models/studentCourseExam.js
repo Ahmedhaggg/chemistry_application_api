@@ -12,11 +12,11 @@ let StudentCourseExamSchema = new Schema({
         ref: "Course",
         required: [true, messages.genrale.required]
     },
-    units: {
+    unitsExams: {
         type: [{ type: Types.ObjectId, ref: "StudentUnitExam" }],
         default: []
     },
-    revisions: {
+    revisionsExams: {
         type: [
             {
                 revision: { type: Types.ObjectId, ref: "Revision" },

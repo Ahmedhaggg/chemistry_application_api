@@ -29,4 +29,9 @@ exports.getAllGrades = async () => await Grade.find().populate({
     select: "name"
 });
 
-
+exports.incrementNumberOfStudents = async (gradeId) => await Grade
+    .updateOne({
+        _id: gradeId 
+    }, {
+        $inc: { numberOfStudent: 1 }
+    }) 

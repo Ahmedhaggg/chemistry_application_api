@@ -1,14 +1,26 @@
 let { Student } = require("../../models");
 
-exports.getAllUnAcceptedStudent = async (limit = 10, offset = 0) =>
-    await Student.find({ accepted })
+exports.getAllUnAcceptedStudent = async (query, limit = 10, offset = 0) =>
+    await Student.find({ accepted: false, ...query })
+        .select("_id name phoneNumber").populate({
+            path: "grade",
+            select: "_id name"
+        })
         .limit(limit)
         .skip(offset);
 
 
-exports.getUnAcceptedStudent = async (query, fields = ["name", 'email', "currentCourse", "phoneNumber", "grade"]) =>
+exports.getUnAcceptedStudent = async (query, fields = "name email phoneNumber") => 
     await Student.findOne({ ...query, accepted: false })
-        .select(...fields);
+        .select(fields)
+        .populate({ 
+            path: "currentCourse",
+            select: "name"
+        })
+        .populate({
+            path: "grade",
+            select: "name"
+        });
 
 
 exports.updateStudent = async (query, newData) => {
@@ -32,7 +44,8 @@ exports.getAllAcceptingStudents = async (query, { limit = 10, offset = 0 }) => a
     .limit(limit)
     .skip(offset);
 
-exports.getStudent = async query => await Student.findOne(query)
+exports.getStudent = async query => {
+    let student = await Student.findOne(query)
     .select("_id name email phoneNumber")
     .populate({
         path: "grade",
@@ -41,7 +54,24 @@ exports.getStudent = async query => await Student.findOne(query)
     .populate({
         path: "currentCourse",
         select: "name"
+    })
+    .populate({
+        path: "courseProgress.currentUnit.unitId",
+        select: "name arrangement"
+    })
+    .populate({
+        path: "courseProgress.currentLesson.lessonId",
+        select: "name arrangement"
+    })
+    .populate({
+        path: "courseProgress.currentUnitRevision.revisionId",
+        select: "name arrangement"
+    })
+    .populate({
+        path: "courseRevisionProgress.revisionId",
+        select: "name arrangement"
     });
-
-
+    return student;
+}
 exports.countAcceptingStudents = async (query = {}) => await Student.countDocuments({ ...query, accepted: true });
+exports.countunAcceptingStudents = async (query = {}) => await Student.countDocuments({ ...query, accepted: false });

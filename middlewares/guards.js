@@ -36,7 +36,7 @@ exports.isStudent = async (req, res, next) => {
         };
 
         next();
-    } catch (_) {
+    } catch (err) {
         let newError = new APIError(status.INTERNAL_SERVER_ERROR, {
             success: false,
             errorName: "serverError",
@@ -75,11 +75,10 @@ exports.isTeacher = async (req, res, next) => {
         next(error);
 
     } catch (error) {
-        console.log(error)
-        let newError = new APIError(status.INTERNAL_SERVER_ERROR, {
+        let newError = new APIError(error.httpStatusCode || status.INTERNAL_SERVER_ERROR, {
             success: false,
-            errorName: "serverError",
-            message: messages.serverError
+            errorName: error.description.errorName || "serverError",
+            message: error.description.message || messages.serverError
         });
 
         next(newError);

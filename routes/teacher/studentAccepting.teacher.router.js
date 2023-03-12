@@ -5,6 +5,11 @@ let guards = require("../../middlewares/guards");
 let studentAcceptingTeacherValidation = require("../../validations/teacher/studentAccepting.teacher.validation");
 let checkValidationErrors = require("../../middlewares/checkValidationErrors");
 
+router.get("/un-accepted/count",
+    guards.isTeacher,
+    catchErrors(studentAcceptingTeacherController.count)
+);
+
 router.get('/un-accepted',
     guards.isTeacher,
     catchErrors(studentAcceptingTeacherController.index)

@@ -23,11 +23,12 @@ exports.index = async (req, res, next) => {
 
 exports.store = async (req, res, next) => {
     let { courseId } = req.params;
-    let { name, arrangement, video, exam, description } = req.body;
+    let { name, video, exam, description } = req.body;
+    let numberOfRevisions =  await courseService.countCourseRevisions(courseId)
 
     let revision = await revisionService.createRevision({
         name,
-        arrangement,
+        arrangement: numberOfRevisions + 1,
         video,
         exam,
         description
